@@ -43,12 +43,14 @@ class TeacherPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Teacher/Resources'), for: 'App\Filament\Teacher\Resources')
             ->discoverPages(in: app_path('Filament/Teacher/Pages'), for: 'App\Filament\Teacher\Pages')
             ->pages([
-                Dashboard::class,
+                \App\Filament\Teacher\Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Teacher/Widgets'), for: 'App\Filament\Teacher\Widgets')
             ->widgets([
+                \App\Filament\Teacher\Widgets\TeacherHeroWidget::class,
+                \App\Filament\Teacher\Widgets\TeacherStatsWidget::class,
+                \App\Filament\Teacher\Widgets\TeacherRecentStudentsWidget::class,
                 AccountWidget::class,
-                FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
