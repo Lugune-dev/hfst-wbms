@@ -1,0 +1,67 @@
+/* =====================================================
+   HFST – Custom Filament Panel Styles
+   Brand Colors: Deep Blue #13385E | Leaf Green #2E7D32 | Golden Yellow #F6B219
+   ===================================================== */
+
+/* ── Round Logo in Sidebar ── */
+.fi-logo img,
+.fi-sidebar-nav .fi-logo img {
+    border-radius: 9999px !important;
+    object-fit: cover !important;
+    border: 3px solid rgba(246, 178, 25, 0.5);
+    box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.2);
+    padding: 2px;
+    background: white;
+}
+
+/* ── Sidebar Enhancement ── */
+.fi-sidebar {
+    background: linear-gradient(180deg, #0d2640 0%, #13385E 40%, #0f2e1a 100%) !important;
+}
+
+.fi-sidebar-nav-group-label {
+    font-size: 0.65rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: rgba(246, 178, 25, 0.85) !important;
+}
+
+.fi-sidebar-item-button {
+    border-radius: 0.75rem !important;
+    margin: 0 0.5rem !important;
+    transition: background 0.2s, transform 0.1s !important;
+}
+
+.fi-sidebar-item-button:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    transform: translateX(2px) !important;
+}
+
+.fi-sidebar-item-button.fi-active {
+    background: linear-gradient(90deg, rgba(246,178,25,0.2), rgba(46,125,50,0.15)) !important;
+    border-left: 3px solid #F6B219 !important;
+}
+
+/* ── Stats Cards Icon Enhancement ── */
+.fi-wi-stats-overview-stat {
+    border-radius: 1rem !important;
+    border: 1px solid rgba(19, 56, 94, 0.08) !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+}
+
+.fi-wi-stats-overview-stat:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1) !important;
+}
+
+/* Dark mode sidebar */
+.dark .fi-sidebar {
+    background: linear-gradient(180deg, #050e18 0%, #0a1e30 40%, #071510 100%) !important;
+}
+
+/* ── Top Header ── */
+.fi-topbar {
+    border-bottom: 1px solid rgba(19, 56, 94, 0.15) !important;
+    backdrop-filter: blur(8px) !important;
+}
