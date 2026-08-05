@@ -32,8 +32,9 @@ class TeacherPanelProvider extends PanelProvider
             ->brandLogoHeight('3rem')
             ->favicon(asset('favicon.ico'))
             ->darkMode(true)
+            ->renderHook('panels::head.end', fn () => '<link rel="stylesheet" href="' . asset('css/filament/hfst-panel.css') . '">')
             ->colors([
-                'primary' => Color::hex('#1e5080'), // Blue for teachers
+                'primary' => Color::hex('#13385E'),
                 'success' => Color::hex('#2E7D32'),
                 'warning' => Color::hex('#F6B219'),
                 'danger'  => Color::hex('#DC2626'),

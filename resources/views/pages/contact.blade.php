@@ -4,59 +4,44 @@
 
 @section('content')
 
+{{-- HERO --}}
 <div class="page-hero">
     <div class="page-hero-inner">
-        <h1>{{ __('contact.title') }}</h1>
-        <p>{{ __('contact.subtitle') }}</p>
+        <span class="page-hero-badge">{{ __('contact.title') }}</span>
+        <h1>{{ __('contact.subtitle') }}</h1>
     </div>
 </div>
 
-<div class="py-16 sm:py-24" style="background: var(--surface-bg);">
+{{-- MAIN --}}
+<div class="py-16 sm:py-24 section-light">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
 
-            <!-- Contact Info -->
-            <div>
-                <h2 class="text-3xl font-extrabold mb-4" style="color: var(--text-primary);">
-                    {{ __('contact.get_in_touch') }}
-                </h2>
-                <p class="text-lg leading-relaxed mb-10" style="color: var(--text-muted);">
-                    {{ __('contact.description') }}
-                </p>
+            {{-- Contact Info --}}
+            <div class="animate-fade-in-up">
+                <span class="section-label">{{ __('contact.get_in_touch') }}</span>
+                <h2 class="section-title mb-6">{{ __('contact.get_in_touch') }}</h2>
+                <p class="text-lg leading-relaxed mb-10" style="color: var(--text-muted);">{{ __('contact.description') }}</p>
 
                 <dl class="space-y-6">
                     @foreach([
-                        [
-                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>',
-                            'text' => __('contact.phone'),
-                        ],
-                        [
-                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>',
-                            'text' => __('contact.email'),
-                        ],
-                        [
-                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>',
-                            'text' => __('contact.address'),
-                        ],
+                        ['icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>', 'text' => __('contact.phone')],
+                        ['icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>', 'text' => __('contact.email')],
+                        ['icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>', 'text' => __('contact.address')],
                     ] as $item)
-                    <div class="flex items-start gap-4">
-                        <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                             style="background: rgba(19,56,94,0.1);">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                 style="color: var(--brand-blue);">
-                                {!! $item['icon'] !!}
-                            </svg>
+                    <div class="flex items-start gap-4 group">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
+                             style="background: rgba(19,56,94,0.08); border: 1px solid var(--border-light);">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--brand-blue);">{!! $item['icon'] !!}</svg>
                         </div>
-                        <div class="pt-2 font-medium" style="color: var(--text-primary);">{{ $item['text'] }}</div>
+                        <div class="pt-2.5 font-medium text-base" style="color: var(--text-primary);">{{ $item['text'] }}</div>
                     </div>
                     @endforeach
                 </dl>
 
-                <!-- Social links -->
+                {{-- Social --}}
                 <div class="mt-10">
-                    <p class="text-sm font-bold uppercase tracking-widest mb-4" style="color: var(--brand-blue);">
-                        {{ __('social.follow_us') }}
-                    </p>
+                    <p class="text-sm font-bold uppercase tracking-widest mb-4" style="color: var(--brand-blue);">{{ __('social.follow_us') }}</p>
                     <div class="flex gap-3">
                         @foreach([
                             ['url' => 'https://facebook.com',    'label' => 'Facebook',   'path' => 'M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z'],
@@ -65,21 +50,19 @@
                             ['url' => 'mailto:info@hfst.co.tz', 'label' => 'Email',      'path' => 'M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'],
                         ] as $s)
                         <a href="{{ $s['url'] }}" target="_blank" rel="noopener" aria-label="{{ $s['label'] }}"
-                           class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
-                           style="background: rgba(19,56,94,0.1); color: var(--brand-blue);"
+                           class="w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-rotate-6"
+                           style="background: rgba(19,56,94,0.08); color: var(--brand-blue);"
                            onmouseover="this.style.background='var(--brand-blue)';this.style.color='#fff';"
-                           onmouseout="this.style.background='rgba(19,56,94,0.1)';this.style.color='var(--brand-blue)';">
-                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                                <path d="{{ $s['path'] }}"/>
-                            </svg>
+                           onmouseout="this.style.background='rgba(19,56,94,0.08)';this.style.color='var(--brand-blue)';">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="{{ $s['path'] }}"/></svg>
                         </a>
                         @endforeach
                     </div>
                 </div>
             </div>
 
-            <!-- Contact Form -->
-            <div class="glass-card rounded-2xl p-8 shadow-sm" style="background: var(--surface-card);">
+            {{-- Form --}}
+            <div class="hfst-card p-8 sm:p-10 shadow-md animate-fade-in-up" style="animation-delay: 0.15s;">
                 @livewire('contact-form')
             </div>
         </div>

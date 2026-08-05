@@ -1,6 +1,6 @@
 /* =====================================================
    HFST – Custom Filament Panel Styles
-   Brand Colors: Deep Blue #13385E | Leaf Green #2E7D32 | Golden Yellow #F6B219
+   Brand: Deep Blue #13385E | Leaf Green #2E7D32 | Gold #F6B219
    ===================================================== */
 
 /* ── Round Logo in Sidebar ── */
@@ -14,11 +14,16 @@
     background: white;
 }
 
-/* ── Sidebar Enhancement ── */
+/* ── Sidebar Gradient ── */
 .fi-sidebar {
     background: linear-gradient(180deg, #0d2640 0%, #13385E 40%, #0f2e1a 100%) !important;
 }
 
+.dark .fi-sidebar {
+    background: linear-gradient(180deg, #050e18 0%, #0a1e30 40%, #071510 100%) !important;
+}
+
+/* ── Sidebar Nav Items ── */
 .fi-sidebar-nav-group-label {
     font-size: 0.65rem !important;
     font-weight: 800 !important;
@@ -43,7 +48,13 @@
     border-left: 3px solid #F6B219 !important;
 }
 
-/* ── Stats Cards Icon Enhancement ── */
+/* ── Top Header ── */
+.fi-topbar {
+    border-bottom: 1px solid rgba(19, 56, 94, 0.15) !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+/* ── Stats Cards ── */
 .fi-wi-stats-overview-stat {
     border-radius: 1rem !important;
     border: 1px solid rgba(19, 56, 94, 0.08) !important;
@@ -55,13 +66,73 @@
     box-shadow: 0 8px 24px rgba(0,0,0,0.1) !important;
 }
 
-/* Dark mode sidebar */
-.dark .fi-sidebar {
-    background: linear-gradient(180deg, #050e18 0%, #0a1e30 40%, #071510 100%) !important;
+/* ── Page Title ── */
+.fi-page-title {
+    font-weight: 900 !important;
+    letter-spacing: -0.02em !important;
 }
 
-/* ── Top Header ── */
-.fi-topbar {
-    border-bottom: 1px solid rgba(19, 56, 94, 0.15) !important;
-    backdrop-filter: blur(8px) !important;
+/* ── Tables ── */
+.fi-tables-table {
+    border-radius: 1rem !important;
+    overflow: hidden !important;
 }
+
+.fi-tables-table th {
+    font-size: 0.7rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+}
+
+/* ── Buttons ── */
+.fi-btn-primary {
+    border-radius: 0.75rem !important;
+    font-weight: 700 !important;
+    transition: transform 0.15s, box-shadow 0.2s !important;
+}
+
+.fi-btn-primary:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 18px rgba(19, 56, 94, 0.3) !important;
+}
+
+/* ── Cards / Sections ── */
+.fi-section,
+.fi-card {
+    border-radius: 1.25rem !important;
+    border: 1px solid rgba(19, 56, 94, 0.08) !important;
+    transition: box-shadow 0.2s !important;
+}
+
+.fi-section:hover,
+.fi-card:hover {
+    box-shadow: 0 4px 20px rgba(19, 56, 94, 0.08) !important;
+}
+
+/* ── Notifications ── */
+.fi-notifications-notification {
+    border-radius: 0.85rem !important;
+}
+
+/* ── Dark Mode Adjustments ── */
+.dark .fi-wi-stats-overview-stat {
+    border-color: rgba(255,255,255,0.08) !important;
+}
+
+.dark .fi-section,
+.dark .fi-card {
+    border-color: rgba(255,255,255,0.07) !important;
+}
+
+/* ── Login Page ── */
+.fi-login-form {
+    border-radius: 1.5rem !important;
+    box-shadow: 0 20px 60px rgba(19, 56, 94, 0.15) !important;
+}
+
+/* ── Scrollbar ── */
+.fi-sidebar::-webkit-scrollbar { width: 6px; }
+.fi-sidebar::-webkit-scrollbar-track { background: transparent; }
+.fi-sidebar::-webkit-scrollbar-thumb { background: rgba(246,178,25,0.3); border-radius: 3px; }
+.fi-sidebar::-webkit-scrollbar-thumb:hover { background: rgba(246,178,25,0.5); }

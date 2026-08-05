@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Donation;
 use App\Models\Donor;
 use App\Models\Post;
 use App\Models\Project;
@@ -29,14 +30,17 @@ class PublicController extends Controller
         // Highlights (managed via admin)
         $highlights = Highlight::where('is_active', true)->orderBy('sort_order')->get();
 
+        $totalRaised = Donation::sum('amount') ?? 0;
+
         return view('pages.home', compact(
             'featuredProjects',
             'latestNews',
             'studentsCount',
             'projectsCount',
             'donorsCount',
-            'testimonials'
-            , 'highlights'
+            'testimonials',
+            'highlights',
+            'totalRaised'
         ));
     }
 
