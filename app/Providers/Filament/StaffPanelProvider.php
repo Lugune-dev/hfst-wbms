@@ -56,6 +56,7 @@ class StaffPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Staff/Widgets'), for: 'App\Filament\Staff\Widgets')
             ->widgets([
+                \App\Filament\Staff\Widgets\StaffHeroWidget::class,
                 StaffStatsWidget::class,
                 StaffRecentStudentsWidget::class,
                 StaffProjectsWidget::class,

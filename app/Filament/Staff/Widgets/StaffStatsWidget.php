@@ -25,26 +25,32 @@ class StaffStatsWidget extends BaseWidget
         return [
             Stat::make('Wanafunzi Wote', $totalStudents)
                 ->description('Waliosajiliwa mfumoni')
+                ->descriptionIcon('heroicon-m-academic-cap')
                 ->color('primary'),
 
             Stat::make('Wanafunzi Hai', $activeStudents)
                 ->description('Wanaosoma sasa hivi')
+                ->descriptionIcon('heroicon-m-check-badge')
                 ->color('success'),
 
             Stat::make('Wahitimu', $graduatedStudents)
                 ->description('Waliomaliza masomo')
+                ->descriptionIcon('heroicon-m-trophy')
                 ->color('info'),
 
             Stat::make('Walioacha', $droppedStudents)
                 ->description('Walioacha masomo')
+                ->descriptionIcon('heroicon-m-x-circle')
                 ->color('danger'),
 
             Stat::make('Miradi Hai', $activeProjects)
                 ->description('Inayofanya kazi sasa')
+                ->descriptionIcon('heroicon-m-folder-open')
                 ->color('warning'),
 
             Stat::make('Maombi Yanayongoja', $pendingApplications)
                 ->description('Yanasubiri ukaguzi')
+                ->descriptionIcon('heroicon-m-inbox')
                 ->color('gray'),
         ];
     }

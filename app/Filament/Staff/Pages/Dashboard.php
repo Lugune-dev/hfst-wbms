@@ -15,6 +15,7 @@ class Dashboard extends BaseDashboard
     public function getWidgets(): array
     {
         return [
+            \App\Filament\Staff\Widgets\StaffHeroWidget::class,
             \App\Filament\Staff\Widgets\StaffStatsWidget::class,
             \App\Filament\Staff\Widgets\StaffRecentStudentsWidget::class,
             \App\Filament\Staff\Widgets\StaffProjectsWidget::class,

@@ -20,6 +20,7 @@ class DonorStatsWidget extends BaseWidget
             return [
                 Stat::make('No Profile Found', '—')
                     ->description('Please contact admin to link your donor account.')
+                    ->descriptionIcon('heroicon-m-exclamation-triangle')
                     ->color('danger'),
             ];
         }
@@ -45,18 +46,22 @@ class DonorStatsWidget extends BaseWidget
         return [
             Stat::make('Total Donated', 'TZS ' . number_format($totalDonated, 0))
                 ->description('All your confirmed contributions')
+                ->descriptionIcon('heroicon-m-currency-dollar')
                 ->color('success'),
 
             Stat::make('Confirmed Donations', $donationsCount)
                 ->description('Number of times you have donated')
+                ->descriptionIcon('heroicon-m-check-circle')
                 ->color('primary'),
 
             Stat::make('Students Sponsored', $sponsoredStudents)
                 ->description('Lives you have directly touched')
+                ->descriptionIcon('heroicon-m-academic-cap')
                 ->color('info'),
 
             Stat::make('Pending Donations', $pendingDonations)
                 ->description('Awaiting confirmation')
+                ->descriptionIcon('heroicon-m-clock')
                 ->color('warning'),
         ];
     }

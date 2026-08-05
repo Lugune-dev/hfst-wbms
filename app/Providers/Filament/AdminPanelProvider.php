@@ -71,6 +71,7 @@ class AdminPanelProvider extends PanelProvider
                 for: 'App\\Filament\\Admin\\Widgets'
             )
             ->widgets([
+                \App\Filament\Admin\Widgets\AdminHeroWidget::class,
                 StatsOverviewWidget::class,
                 DonationsChartWidget::class,
                 RecentDonationsWidget::class,

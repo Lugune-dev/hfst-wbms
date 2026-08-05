@@ -28,6 +28,7 @@ class Dashboard extends BaseDashboard
     public function getWidgets(): array
     {
         return [
+            \App\Filament\Admin\Widgets\AdminHeroWidget::class,
             \App\Filament\Admin\Widgets\StatsOverviewWidget::class,
             \App\Filament\Admin\Widgets\DonationsChartWidget::class,
             \App\Filament\Admin\Widgets\RecentDonationsWidget::class,
