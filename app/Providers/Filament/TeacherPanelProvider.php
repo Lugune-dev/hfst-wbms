@@ -2,16 +2,18 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Teacher\Pages\Dashboard;
+use App\Filament\Teacher\Widgets\TeacherRecentStudentsWidget;
+use App\Filament\Teacher\Widgets\TeacherStatsWidget;
+use App\Filament\Teacher\Widgets\TeacherWelcomeWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard;
+use App\Models\School;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -27,12 +29,20 @@ class TeacherPanelProvider extends PanelProvider
             ->id('teacher')
             ->path('teacher')
             ->login()
+            ->passwordReset()
+            ->tenant(School::class)
             ->brandName('Hope for Students - Teacher Portal')
             ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('3rem')
             ->favicon(asset('favicon.ico'))
             ->darkMode(true)
+            ->viteTheme('resources/css/filament/theme.css')
+            ->profile(\App\Filament\Pages\Auth\EditProfile::class, isSimple: false)
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
+            ->renderHook('panels::user-menu.before', fn () => view('filament.widgets.language-switcher'))
             ->renderHook('panels::head.end', fn () => '<link rel="stylesheet" href="' . asset('css/filament/hfst-panel.css') . '">')
+            ->renderHook('panels::auth.login.form.after', fn () => view('filament.auth.login-footer'))
             ->colors([
                 'primary' => Color::hex('#13385E'),
                 'success' => Color::hex('#2E7D32'),
@@ -48,15 +58,15 @@ class TeacherPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Teacher/Widgets'), for: 'App\Filament\Teacher\Widgets')
             ->widgets([
-                \App\Filament\Teacher\Widgets\TeacherHeroWidget::class,
-                \App\Filament\Teacher\Widgets\TeacherStatsWidget::class,
-                \App\Filament\Teacher\Widgets\TeacherRecentStudentsWidget::class,
-                AccountWidget::class,
+                TeacherWelcomeWidget::class,
+                TeacherStatsWidget::class,
+                TeacherRecentStudentsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
+                \App\Http\Middleware\SetLocale::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
                 PreventRequestForgery::class,

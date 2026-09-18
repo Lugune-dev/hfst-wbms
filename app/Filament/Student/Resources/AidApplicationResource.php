@@ -15,15 +15,35 @@ class AidApplicationResource extends Resource
 {
     protected static ?string $model = AidApplication::class;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-hand-raised';
-    protected static ?string $navigationLabel = 'Aid Applications';
-    protected static ?string $pluralModelLabel = 'My Aid Applications';
-    protected static string|\UnitEnum|null $navigationGroup = 'Support';
+    protected static ?string $navigationLabel = 'Maombi ya Msaada (Aid Requests)';
+    protected static ?string $pluralModelLabel = 'Maombi Yangu ya Msaada';
+    protected static string|\UnitEnum|null $navigationGroup = 'Msaada wa Masomo / Aid Support';
     protected static ?int $navigationSort = 1;
 
     public static function getEloquentQuery(): Builder
     {
+        $user = auth()->user();
+        $student = $user?->student;
+
+        if (!$student && $user) {
+            $names = explode(' ', $user->name, 2);
+            $student = \App\Models\Student::firstOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'first_name'      => $names[0] ?? 'Mwanafunzi',
+                    'last_name'       => $names[1] ?? 'HFST',
+                    'gender'          => 'Female',
+                    'age'             => 16,
+                    'school_id'       => 1,
+                    'school'          => 'Arusha Secondary School',
+                    'education_level' => 'Secondary',
+                    'status'          => 'Active',
+                ]
+            );
+        }
+
         return parent::getEloquentQuery()
-            ->where('student_id', auth()->user()->student?->id);
+            ->where('student_id', $student?->id);
     }
 
     public static function form(Schema $schema): Schema

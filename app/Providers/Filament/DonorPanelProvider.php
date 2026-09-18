@@ -26,12 +26,19 @@ class DonorPanelProvider extends PanelProvider
             ->id('donor')
             ->path('donor')
             ->login()
+            ->passwordReset()
             ->brandName('HFST – Donor Portal')
             ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('3rem')
             ->favicon(asset('favicon.ico'))
             ->darkMode(true)
+            ->viteTheme('resources/css/filament/theme.css')
+            ->profile(\App\Filament\Pages\Auth\EditProfile::class, isSimple: false)
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
+            ->renderHook('panels::user-menu.before', fn () => view('filament.widgets.language-switcher'))
             ->renderHook('panels::head.end', fn () => '<link rel="stylesheet" href="' . asset('css/filament/hfst-panel.css') . '">')
+            ->renderHook('panels::auth.login.form.after', fn () => view('filament.auth.login-footer'))
             ->colors([
                 'primary' => Color::hex('#13385E'),
                 'success' => Color::hex('#2E7D32'),
@@ -70,6 +77,7 @@ class DonorPanelProvider extends PanelProvider
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
+                \App\Http\Middleware\SetLocale::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
                 PreventRequestForgery::class,

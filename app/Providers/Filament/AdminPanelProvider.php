@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Admin\Pages\Dashboard;
+use App\Filament\Admin\Widgets\AdminWelcomeWidget;
 use App\Filament\Admin\Widgets\DonationsChartWidget;
 use App\Filament\Admin\Widgets\RecentDonationsWidget;
 use App\Filament\Admin\Widgets\StatsOverviewWidget;
@@ -33,12 +34,19 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset()
             ->brandName('Hope for Students Tanzania')
             ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('3rem')
             ->favicon(asset('favicon.ico'))
             ->darkMode(true)
+            ->viteTheme('resources/css/filament/theme.css')
+            ->profile(\App\Filament\Pages\Auth\EditProfile::class, isSimple: false)
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
+            ->renderHook('panels::user-menu.before', fn () => view('filament.widgets.language-switcher'))
             ->renderHook('panels::head.end', fn () => '<link rel="stylesheet" href="' . asset('css/filament/hfst-panel.css') . '">')
+            ->renderHook('panels::auth.login.form.after', fn () => view('filament.auth.login-footer'))
             ->colors([
                 'primary' => Color::hex('#13385E'),
                 'success' => Color::hex('#2E7D32'),
@@ -49,11 +57,11 @@ class AdminPanelProvider extends PanelProvider
             ])
 
             ->navigationGroups([
-                NavigationGroup::make('People'),
-                NavigationGroup::make('Finance'),
-                NavigationGroup::make('Projects'),
-                NavigationGroup::make('Content'),
-                NavigationGroup::make('System'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Wanafunzi & Shule' : 'Students & Schools'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Fedha & Michango' : 'Finance & Donations'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Miradi ya Elimu' : 'Educational Projects'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Mawasiliano & Maudhui' : 'Communications & Content'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Usalama & Mfumo' : 'Security & System'),
             ])
             ->discoverResources(
                 in: app_path('Filament/Admin/Resources'),
@@ -71,7 +79,7 @@ class AdminPanelProvider extends PanelProvider
                 for: 'App\\Filament\\Admin\\Widgets'
             )
             ->widgets([
-                \App\Filament\Admin\Widgets\AdminHeroWidget::class,
+                AdminWelcomeWidget::class,
                 StatsOverviewWidget::class,
                 DonationsChartWidget::class,
                 RecentDonationsWidget::class,
@@ -82,6 +90,7 @@ class AdminPanelProvider extends PanelProvider
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
+                \App\Http\Middleware\SetLocale::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
                 PreventRequestForgery::class,

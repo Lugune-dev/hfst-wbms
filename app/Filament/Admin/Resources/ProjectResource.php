@@ -13,9 +13,17 @@ use Filament\Tables\Table;
 class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
-    // protected static string | \BackedEnum | null $navigationIcon = null;
-    protected static string | \UnitEnum | null $navigationGroup = 'Projects';
     protected static ?int $navigationSort = 1;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? 'Miradi ya Elimu' : 'Educational Projects';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Miradi ya Elimu' : 'Projects';
+    }
 
     public static function form(Schema $schema): Schema
     {

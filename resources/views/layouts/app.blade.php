@@ -90,8 +90,10 @@
                 <a href="{{ route('home') }}"     class="nav-link {{ request()->routeIs('home') ? 'nav-link--active' : '' }}" role="menuitem">{{ __('nav.home') }}</a>
                 <a href="{{ route('about') }}"    class="nav-link {{ request()->routeIs('about') ? 'nav-link--active' : '' }}" role="menuitem">{{ __('nav.about') }}</a>
                 <a href="{{ route('projects') }}" class="nav-link {{ request()->routeIs('projects','programs') ? 'nav-link--active' : '' }}" role="menuitem">{{ __('nav.projects') }}</a>
+                <a href="{{ route('schools') }}"  class="nav-link {{ request()->routeIs('schools') ? 'nav-link--active' : '' }}" role="menuitem">{{ app()->getLocale() === 'sw' ? 'Shule' : 'Schools' }}</a>
+                <a href="{{ route('apply') }}"    class="nav-link {{ request()->routeIs('apply*') ? 'nav-link--active' : '' }}" role="menuitem">{{ app()->getLocale() === 'sw' ? 'Omba Msaada' : 'Apply for Aid' }}</a>
                 <a href="{{ route('news') }}"     class="nav-link {{ request()->routeIs('news') ? 'nav-link--active' : '' }}" role="menuitem">{{ __('nav.news') }}</a>
-                <a href="{{ route('donate') }}"   class="nav-link nav-link--donate {{ request()->routeIs('donate') ? 'nav-link--active' : '' }}" role="menuitem">{{ __('nav.donate') }}</a>
+                <a href="{{ route('donate') }}"   class="nav-link nav-link--donate {{ request()->routeIs('donate*') ? 'nav-link--active' : '' }}" role="menuitem">{{ __('nav.donate') }}</a>
                 <a href="{{ route('contact') }}"  class="nav-link {{ request()->routeIs('contact') ? 'nav-link--active' : '' }}" role="menuitem">{{ __('nav.contact') }}</a>
             </div>
 
@@ -141,8 +143,10 @@
                     <a href="{{ route('home') }}"     class="mobile-nav-link {{ request()->routeIs('home') ? 'mobile-nav-link--active' : '' }}">{{ __('nav.home') }}</a>
                     <a href="{{ route('about') }}"    class="mobile-nav-link {{ request()->routeIs('about') ? 'mobile-nav-link--active' : '' }}">{{ __('nav.about') }}</a>
                     <a href="{{ route('projects') }}" class="mobile-nav-link {{ request()->routeIs('projects','programs') ? 'mobile-nav-link--active' : '' }}">{{ __('nav.projects') }}</a>
+                    <a href="{{ route('schools') }}"  class="mobile-nav-link {{ request()->routeIs('schools') ? 'mobile-nav-link--active' : '' }}">{{ app()->getLocale() === 'sw' ? 'Shule Washirika' : 'Partner Schools' }}</a>
+                    <a href="{{ route('apply') }}"    class="mobile-nav-link {{ request()->routeIs('apply*') ? 'mobile-nav-link--active' : '' }}">{{ app()->getLocale() === 'sw' ? 'Omba Msaada' : 'Apply for Aid' }}</a>
                     <a href="{{ route('news') }}"     class="mobile-nav-link {{ request()->routeIs('news') ? 'mobile-nav-link--active' : '' }}">{{ __('nav.news') }}</a>
-                    <a href="{{ route('donate') }}"   class="mobile-nav-link mobile-nav-link--donate {{ request()->routeIs('donate') ? 'mobile-nav-link--active' : '' }}">{{ __('nav.donate') }}</a>
+                    <a href="{{ route('donate') }}"   class="mobile-nav-link mobile-nav-link--donate {{ request()->routeIs('donate*') ? 'mobile-nav-link--active' : '' }}">{{ __('nav.donate') }}</a>
                     <a href="{{ route('contact') }}"  class="mobile-nav-link {{ request()->routeIs('contact') ? 'mobile-nav-link--active' : '' }}">{{ __('nav.contact') }}</a>
                 </div>
                 <div class="mobile-lang-btns">
@@ -182,43 +186,102 @@
     <!-- ======================================================
          FOOTER
     ====================================================== -->
+    <!-- ======================================================
+         FOOTER
+    ====================================================== -->
     <footer class="hfst-footer">
         <div class="footer-container">
-            <div class="footer-grid">
-                <!-- Brand -->
+            <div class="footer-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2.5rem;">
+                <!-- Brand & Official Arusha Contacts -->
                 <div class="footer-brand-col">
                     <div class="footer-logo-row">
                         <img src="{{ asset('images/logo.png') }}" alt="HFST Logo" class="footer-logo">
                         <span class="footer-brand-name">Hope for Students Tanzania</span>
                     </div>
-                    <p class="footer-desc">{{ __('footer.description') }}</p>
+                    <p class="footer-desc">
+                        {{ app()->getLocale() === 'sw' 
+                            ? 'Shirika lisilo la kiserikali linalosaidia elimu ya watoto na vijana nchini Tanzania kupitia ada, vifaa, na miradi ya kijamii.' 
+                            : 'Dedicated to empowering underprivileged students across Tanzania with quality education, school supplies, and sustainable community support.' }}
+                    </p>
+                    <div class="mt-4 text-xs space-y-1.5" style="color: var(--text-muted);">
+                        <p class="font-bold" style="color: var(--brand-yellow);">ALL COMMUNICATION TO BE ADDRESSED TO ICT OFFICERS</p>
+                        <p>📍 P.O. Box 2798, Arusha, Kikwakwaru B, Tanzania</p>
+                        <p>📞 +255 613 005 293 | +255 747 413 379</p>
+                        <p>✉️ hopeforstudentsTanzania25@gmail.com</p>
+                    </div>
                 </div>
+
                 <!-- Quick Links -->
                 <div>
                     <h4 class="footer-col-title">{{ __('footer.quick_links') }}</h4>
                     <ul class="footer-links">
                         <li><a href="{{ route('about') }}" class="footer-link">{{ __('nav.about') }}</a></li>
                         <li><a href="{{ route('projects') }}" class="footer-link">{{ __('nav.projects') }}</a></li>
+                        <li><a href="{{ route('schools') }}" class="footer-link">{{ app()->getLocale() === 'sw' ? 'Shule Washirika' : 'Partner Schools' }}</a></li>
+                        <li><a href="{{ route('apply') }}" class="footer-link">{{ app()->getLocale() === 'sw' ? 'Omba Msaada' : 'Apply for Aid' }}</a></li>
                         <li><a href="{{ route('news') }}" class="footer-link">{{ __('nav.news') }}</a></li>
                         <li><a href="{{ route('donate') }}" class="footer-link">{{ __('nav.donate') }}</a></li>
                         <li><a href="{{ route('contact') }}" class="footer-link">{{ __('nav.contact') }}</a></li>
                     </ul>
                 </div>
-                <!-- Portals -->
+
+                <!-- Internal Portals -->
                 <div>
                     <h4 class="footer-col-title">{{ __('footer.portals') }}</h4>
                     <ul class="footer-links">
+                        <li><a href="/login"   class="footer-link">🔑 {{ app()->getLocale() === 'sw' ? 'Chagua Lango (Portal Selection)' : 'Portal Login Gateway' }}</a></li>
                         <li><a href="/donor"   class="footer-link">{{ __('footer.donor_dashboard') }}</a></li>
                         <li><a href="/student" class="footer-link">{{ __('footer.student_access') }}</a></li>
-                        <li><a href="/admin"   class="footer-link">{{ __('footer.staff_login') }}</a></li>
+                        <li><a href="/teacher" class="footer-link">{{ app()->getLocale() === 'sw' ? 'Lango la Walimu' : 'Teacher Portal' }}</a></li>
+                        <li><a href="/staff"   class="footer-link">{{ __('footer.staff_login') }}</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal & Compliance -->
+                <div>
+                    <h4 class="footer-col-title">{{ app()->getLocale() === 'sw' ? 'Sheria & Faragha' : 'Legal & Compliance' }}</h4>
+                    <ul class="footer-links">
+                        <li><a href="{{ route('privacy') }}" class="footer-link">🛡️ {{ app()->getLocale() === 'sw' ? 'Sera ya Faragha (Tanzania Data Act)' : 'Privacy Policy (Data Act 2022)' }}</a></li>
+                        <li><a href="{{ route('terms') }}" class="footer-link">📜 {{ app()->getLocale() === 'sw' ? 'Vigezo na Masharti' : 'Terms & Conditions' }}</a></li>
+                        <li><a href="{{ route('donor.register') }}" class="footer-link">💛 {{ app()->getLocale() === 'sw' ? 'Sajiliwa Kama Mfadhili' : 'Register as Donor' }}</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; {{ date('Y') }} {{ __('footer.copyright') }}</p>
+
+            <div class="footer-bottom flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+                <p>&copy; {{ date('Y') }} Hope for Students Tanzania (HFST-WBMS). {{ __('footer.copyright') }}</p>
+                <div class="flex items-center gap-4 text-[11px]" style="color: var(--text-muted);">
+                    <span>Compliance: Tanzania Personal Data Protection Act (2022)</span>
+                    <span>•</span>
+                    <span>Arusha, Tanzania</span>
+                </div>
             </div>
         </div>
     </footer>
+
+    <!-- Data Protection Consent Banner (Tanzania 2022 Act) -->
+    <div id="consent-banner" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50 p-5 rounded-2xl shadow-2xl transition-all duration-500 hidden"
+         style="background: var(--surface-card); border: 1px solid var(--border-light); box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+        <div class="flex items-start gap-3">
+            <span class="text-xl">🛡️</span>
+            <div class="flex-1 text-xs leading-relaxed" style="color: var(--text-primary);">
+                <strong class="block mb-1">{{ app()->getLocale() === 'sw' ? 'Ulinzi wa Taarifa Zako (Data Privacy)' : 'Data Privacy Notice' }}</strong>
+                {{ app()->getLocale() === 'sw' 
+                    ? 'Tunazingatia Sheria ya Ulinzi wa Taarifa Binafsi ya Tanzania (2022). Mfumo huu unatumia kuki kuboresha utendaji na kutoa huduma bora.' 
+                    : 'We comply with the Tanzania Personal Data Protection Act, 2022. We use essential cookies to provide secure portal services.' }}
+                <div class="mt-3 flex items-center gap-2">
+                    <button type="button" onclick="acceptConsent()"
+                            class="px-4 py-1.5 rounded-lg font-bold text-white text-xs transition-transform hover:scale-105"
+                            style="background: var(--brand-green);">
+                        {{ app()->getLocale() === 'sw' ? 'Ninakubali' : 'I Accept' }}
+                    </button>
+                    <a href="{{ route('privacy') }}" class="underline text-xs" style="color: var(--brand-blue);">
+                        {{ app()->getLocale() === 'sw' ? 'Soma Zaidi' : 'Read Policy' }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @livewireScripts
     <script src="{{ asset('js/filament/support/support.js') }}" defer></script>
@@ -308,6 +371,21 @@
             initLangDropdown();
             initMobileMenu();
             initNavScroll();
+
+            /* ---- Cookie / Data Consent ---- */
+            window.acceptConsent = function(){
+                try{ localStorage.setItem('hfst_consent', 'accepted'); }catch(e){}
+                var b = document.getElementById('consent-banner');
+                if(b) b.classList.add('hidden');
+            };
+            try{
+                if(!localStorage.getItem('hfst_consent')){
+                    setTimeout(function(){
+                        var b = document.getElementById('consent-banner');
+                        if(b) b.classList.remove('hidden');
+                    }, 1200);
+                }
+            }catch(e){}
         });
     })();
     </script>

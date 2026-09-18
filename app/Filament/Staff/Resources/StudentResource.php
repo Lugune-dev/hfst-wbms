@@ -70,9 +70,30 @@ class StudentResource extends Resource
             ])->columns(2),
 
             \Filament\Schemas\Components\Section::make('Education Details')->components([
-                Forms\Components\TextInput::make('school')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('school_id')
+                    ->relationship('school', 'name')
+                    ->label('Partner School (Shule)')
+                    ->searchable()
+                    ->preload()
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('name')->required()->label('School Name'),
+                        Forms\Components\TextInput::make('code')->required()->label('Code'),
+                        Forms\Components\Select::make('education_level')
+                            ->options([
+                                'Primary' => 'Primary',
+                                'Secondary' => 'Secondary',
+                                'High School' => 'High School',
+                                'Vocational' => 'Vocational',
+                            ])->default('Secondary')->required(),
+                        Forms\Components\TextInput::make('region')->default('Arusha')->required(),
+                    ])
+                    ->live()
+                    ->afterStateUpdated(function ($state, $set) {
+                        if ($sch = \App\Models\School::find($state)) {
+                            $set('school', $sch->name);
+                        }
+                    }),
+                Forms\Components\Hidden::make('school')->default(''),
                 Forms\Components\Select::make('education_level')
                     ->options([
                         'Primary'    => 'Primary',
@@ -126,7 +147,12 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('last_name')
                     ->label('Last Name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('school')->searchable()->limit(30),
+                Tables\Columns\TextColumn::make('school.name')
+                    ->label('School')
+                    ->searchable()
+                    ->sortable()
+                    ->default(fn ($record) => $record->school)
+                    ->limit(30),
                 Tables\Columns\TextColumn::make('education_level')
                     ->badge()
                     ->color(fn (string $state) => match ($state) {
@@ -141,10 +167,14 @@ class StudentResource extends Resource
                         'Active'    => 'success',
                         'Graduated' => 'info',
                         'Dropped'   => 'danger',
+                        default     => 'gray',
                     }),
-                Tables\Columns\TextColumn::make('created_at')->dateTime('d M Y')->sortable(),
+                Tables\Columns\TextColumn::make('created_at')->dateTime('d M Y')->label('Registered'),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('school_id')
+                    ->relationship('school', 'name')
+                    ->label('Filter by School'),
                 Tables\Filters\SelectFilter::make('status')
                     ->options(['Active' => 'Active', 'Graduated' => 'Graduated', 'Dropped' => 'Dropped']),
                 Tables\Filters\SelectFilter::make('education_level')

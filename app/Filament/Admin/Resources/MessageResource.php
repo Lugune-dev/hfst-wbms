@@ -14,9 +14,17 @@ use Filament\Tables\Table;
 class MessageResource extends Resource
 {
     protected static ?string $model = Message::class;
-    protected static string|\UnitEnum|null $navigationGroup = 'System';
-    protected static ?int $navigationSort = 3;
-    protected static ?string $navigationLabel = 'Contact Messages';
+    protected static ?int $navigationSort = 4;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? 'Mawasiliano & Maudhui' : 'Communications & Content';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Ujumbe wa Mfumo' : 'Internal Messages';
+    }
 
     public static function form(Schema $schema): Schema
     {

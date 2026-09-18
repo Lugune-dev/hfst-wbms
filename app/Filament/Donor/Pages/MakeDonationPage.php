@@ -6,6 +6,8 @@ use App\Models\Donation;
 use App\Models\Project;
 use App\Models\Student;
 use App\Models\Donor;
+use App\Models\User;
+use App\Notifications\NewDonationNotification;
 use Filament\Pages\Page;
 use Filament\Schemas\Schema;
 use Filament\Forms\Contracts\HasForms;
@@ -101,7 +103,7 @@ class MakeDonationPage extends Page
 
         $validated = $this->form->getState();
 
-        Donation::create([
+        $donation = Donation::create([
             'donor_id'       => $donor->id,
             'student_id'     => $validated['student_id'] ?? null,
             'project_id'     => $validated['project_id'] ?? null,
@@ -111,6 +113,11 @@ class MakeDonationPage extends Page
             'notes'          => $validated['notes'] ?? null,
             'status'         => 'Pending',
         ]);
+
+        $admins = User::role(['admin', 'staff'])->get();
+        if ($admins->isNotEmpty()) {
+            \Illuminate\Support\Facades\Notification::send($admins, new NewDonationNotification($donation));
+        }
 
         $this->form->fill();
 

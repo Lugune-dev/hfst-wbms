@@ -12,11 +12,18 @@ class Dashboard extends BaseDashboard
     protected static string $routePath = 'dashboard';
     protected static ?string $title = 'Staff Dashboard — Dashibodi ya Wafanyakazi';
 
+    public function getColumns(): int|array
+    {
+        return 2;
+    }
+
     public function getWidgets(): array
     {
         return [
-            \App\Filament\Staff\Widgets\StaffHeroWidget::class,
+            \App\Filament\Staff\Widgets\StaffWelcomeWidget::class,
             \App\Filament\Staff\Widgets\StaffStatsWidget::class,
+            \App\Filament\Staff\Widgets\StaffAidRequestsBarChartWidget::class,
+            \App\Filament\Staff\Widgets\StaffEducationLevelChartWidget::class,
             \App\Filament\Staff\Widgets\StaffRecentStudentsWidget::class,
             \App\Filament\Staff\Widgets\StaffProjectsWidget::class,
         ];

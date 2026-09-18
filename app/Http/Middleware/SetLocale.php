@@ -13,7 +13,7 @@ class SetLocale
 
     public function handle(Request $request, Closure $next): Response
     {
-        $locale = session('locale', config('app.locale', 'en'));
+        $locale = session('locale') ?: $request->cookie('hfst_locale') ?: config('app.locale', 'en');
 
         if (!in_array($locale, $this->supported)) {
             $locale = 'en';

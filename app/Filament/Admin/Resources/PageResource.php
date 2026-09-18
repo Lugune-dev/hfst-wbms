@@ -14,9 +14,17 @@ use Illuminate\Support\Str;
 class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
-    // protected static string | \BackedEnum | null $navigationIcon = null;
-    protected static string | \UnitEnum | null $navigationGroup = 'Content';
     protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? 'Mawasiliano & Maudhui' : 'Communications & Content';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Kurasa za Tovuti' : 'Web Pages';
+    }
 
     public static function form(Schema $schema): Schema
     {

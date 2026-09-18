@@ -14,9 +14,18 @@
     background: white;
 }
 
-/* ── Sidebar Gradient ── */
+/* ── Modern Executive Sidebar ── */
 .fi-sidebar {
-    background: linear-gradient(180deg, #0d2640 0%, #13385E 40%, #0f2e1a 100%) !important;
+    background: #091A2F !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.18) !important;
+}
+
+.fi-sidebar-header {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
 }
 
 .dark .fi-sidebar {
@@ -25,27 +34,40 @@
 
 /* ── Sidebar Nav Items ── */
 .fi-sidebar-nav-group-label {
-    font-size: 0.65rem !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.12em !important;
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.09em !important;
     text-transform: uppercase !important;
-    color: rgba(246, 178, 25, 0.85) !important;
+    color: #94A3B8 !important;
+    padding-left: 0.75rem !important;
+    margin-top: 1rem !important;
+    margin-bottom: 0.35rem !important;
+}
+
+.fi-sidebar-item {
+    margin-bottom: 2px !important;
 }
 
 .fi-sidebar-item-button {
-    border-radius: 0.75rem !important;
+    border-radius: 0.65rem !important;
     margin: 0 0.5rem !important;
-    transition: background 0.2s, transform 0.1s !important;
+    padding: 0.55rem 0.75rem !important;
+    color: #CBD5E1 !important;
+    transition: all 0.2s ease !important;
 }
 
 .fi-sidebar-item-button:hover {
-    background: rgba(255, 255, 255, 0.08) !important;
-    transform: translateX(2px) !important;
+    background: rgba(255, 255, 255, 0.07) !important;
+    color: #FFFFFF !important;
+    transform: translateX(3px) !important;
 }
 
 .fi-sidebar-item-button.fi-active {
-    background: linear-gradient(90deg, rgba(246,178,25,0.2), rgba(46,125,50,0.15)) !important;
+    background: linear-gradient(90deg, rgba(246, 178, 25, 0.18), rgba(255, 255, 255, 0.05)) !important;
+    color: #FFFFFF !important;
     border-left: 3px solid #F6B219 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* ── Top Header ── */
@@ -72,67 +94,315 @@
     letter-spacing: -0.02em !important;
 }
 
-/* ── Tables ── */
-.fi-tables-table {
-    border-radius: 1rem !important;
-    overflow: hidden !important;
+/* ── Top Header ── */
+.fi-topbar {
+    border-bottom: 1px solid rgba(19, 56, 94, 0.15) !important;
+    backdrop-filter: blur(8px) !important;
+    background: rgba(255, 255, 255, 0.75) !important;
 }
 
-.fi-tables-table th {
-    font-size: 0.7rem !important;
+.dark .fi-topbar {
+    background: rgba(10, 20, 32, 0.7) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* =====================================================
+   MODERN DASHBOARD POLISH
+   ===================================================== */
+
+/* ── Widget Section Cards ── */
+.fi-section {
+    border-radius: 1.1rem !important;
+    border: 1px solid rgba(19, 56, 94, 0.08) !important;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04) !important;
+    transition: box-shadow 0.25s ease, transform 0.25s ease !important;
+}
+
+.fi-section:hover {
+    box-shadow: 0 10px 28px rgba(16, 24, 40, 0.08) !important;
+}
+
+.dark .fi-section {
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.fi-section-header-heading {
     font-weight: 800 !important;
-    letter-spacing: 0.08em !important;
-    text-transform: uppercase !important;
+    letter-spacing: -0.01em !important;
+}
+
+/* ── Fade / slide-in entrance for dashboard widgets ── */
+@keyframes hfst-fade-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.fi-wi,
+.fi-section,
+.fi-wi-stats-overview-stat {
+    animation: hfst-fade-up 0.45s ease both;
+}
+
+.fi-wi-stats-overview-stats > *:nth-child(2) { animation-delay: 0.05s; }
+.fi-wi-stats-overview-stats > *:nth-child(3) { animation-delay: 0.1s; }
+.fi-wi-stats-overview-stats > *:nth-child(4) { animation-delay: 0.15s; }
+.fi-wi-stats-overview-stats > *:nth-child(5) { animation-delay: 0.2s; }
+.fi-wi-stats-overview-stats > *:nth-child(6) { animation-delay: 0.25s; }
+
+@media (prefers-reduced-motion: reduce) {
+    .fi-wi, .fi-section, .fi-wi-stats-overview-stat {
+        animation: none !important;
+    }
+}
+
+/* ── Stat value emphasis ── */
+.fi-wi-stats-overview-stat-value {
+    font-weight: 900 !important;
+    letter-spacing: -0.02em !important;
 }
 
 /* ── Buttons ── */
-.fi-btn-primary {
-    border-radius: 0.75rem !important;
-    font-weight: 700 !important;
-    transition: transform 0.15s, box-shadow 0.2s !important;
+.fi-btn {
+    border-radius: 0.65rem !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
 }
 
-.fi-btn-primary:hover {
+.fi-btn:hover {
     transform: translateY(-1px) !important;
-    box-shadow: 0 6px 18px rgba(19, 56, 94, 0.3) !important;
 }
 
-/* ── Cards / Sections ── */
-.fi-section,
-.fi-card {
-    border-radius: 1.25rem !important;
-    border: 1px solid rgba(19, 56, 94, 0.08) !important;
-    transition: box-shadow 0.2s !important;
+/* ── Badges ── */
+.fi-badge {
+    border-radius: 9999px !important;
+    font-weight: 700 !important;
 }
 
-.fi-section:hover,
-.fi-card:hover {
-    box-shadow: 0 4px 20px rgba(19, 56, 94, 0.08) !important;
+/* ── Tables ── */
+.fi-ta-table {
+    border-radius: 0.9rem !important;
+    overflow: hidden !important;
 }
 
-/* ── Notifications ── */
-.fi-notifications-notification {
+.fi-ta-row:hover {
+    background: rgba(19, 56, 94, 0.03) !important;
+}
+
+.dark .fi-ta-row:hover {
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(19, 56, 94, 0.25);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: rgba(246, 178, 25, 0.3);
+    background-clip: content-box;
+}
+
+/* ── Chart widget card ── */
+.fi-wi-chart {
+    border-radius: 1.1rem !important;
+}
+
+/* =====================================================
+   ULTRA-MODERN AUTH & LOGIN SCREENS
+   ===================================================== */
+
+/* ── Fullscreen Ambient Backdrop ── */
+.fi-simple-layout {
+    background-color: #061325 !important;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(46, 125, 50, 0.22) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(246, 178, 25, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(19, 56, 94, 0.45) 0%, transparent 75%),
+        linear-gradient(180deg, #050e1b 0%, #0a1f38 100%) !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 2rem 1rem !important;
+    position: relative !important;
+}
+
+/* ── Glassmorphic Login Container Card ── */
+.fi-simple-main {
+    background: rgba(14, 28, 48, 0.82) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    border-radius: 1.75rem !important;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(246, 178, 25, 0.12),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+    padding: 2.75rem 2.25rem !important;
+    max-width: 28rem !important;
+    width: 100% !important;
+    animation: hfst-login-entrance 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hfst-login-entrance {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Light mode support */
+:root:not(.dark) .fi-simple-main {
+    background: rgba(255, 255, 255, 0.94) !important;
+    border: 1px solid rgba(19, 56, 94, 0.15) !important;
+    box-shadow: 
+        0 20px 40px -10px rgba(19, 56, 94, 0.15),
+        0 0 0 1px rgba(246, 178, 25, 0.2) !important;
+}
+
+/* ── Branded Logo Display ── */
+.fi-simple-header .fi-logo {
+    display: flex !important;
+    justify-content: center !important;
+    margin-bottom: 1.25rem !important;
+}
+
+.fi-simple-header .fi-logo img {
+    height: 4.5rem !important;
+    width: 4.5rem !important;
+    border-radius: 9999px !important;
+    border: 3px solid #F6B219 !important;
+    box-shadow: 0 0 20px rgba(246, 178, 25, 0.35), 0 0 0 4px rgba(46, 125, 50, 0.25) !important;
+    background: #ffffff !important;
+    padding: 3px !important;
+}
+
+/* ── Header Title & Subtitle ── */
+.fi-simple-header-heading {
+    font-size: 1.55rem !important;
+    font-weight: 900 !important;
+    text-align: center !important;
+    letter-spacing: -0.025em !important;
+    color: #ffffff !important;
+    margin-bottom: 0.5rem !important;
+}
+
+:root:not(.dark) .fi-simple-header-heading {
+    color: #13385E !important;
+}
+
+/* ── Panel Identifier Badges ── */
+.fi-simple-header:after {
+    display: table;
+    margin: 0.35rem auto 1.25rem auto;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 9999px;
+}
+
+.fi-panel-admin .fi-simple-header:after {
+    content: "🛡️ ADMIN EXECUTIVE GATEWAY";
+    background: rgba(19, 56, 94, 0.4);
+    color: #93c5fd;
+    border: 1px solid rgba(147, 197, 253, 0.3);
+}
+
+.fi-panel-staff .fi-simple-header:after {
+    content: "📋 STAFF OPERATIONS GATEWAY";
+    background: rgba(46, 125, 50, 0.3);
+    color: #86efac;
+    border: 1px solid rgba(134, 239, 172, 0.3);
+}
+
+.fi-panel-teacher .fi-simple-header:after {
+    content: "🏫 SCHOOL TEACHER GATEWAY";
+    background: rgba(30, 80, 128, 0.4);
+    color: #67e8f9;
+    border: 1px solid rgba(103, 232, 249, 0.3);
+}
+
+.fi-panel-donor .fi-simple-header:after {
+    content: "💛 DONOR IMPACT GATEWAY";
+    background: rgba(246, 178, 25, 0.25);
+    color: #fde047;
+    border: 1px solid rgba(253, 224, 71, 0.35);
+}
+
+.fi-panel-student .fi-simple-header:after {
+    content: "🎓 STUDENT BENEFICIARY GATEWAY";
+    background: rgba(147, 51, 234, 0.3);
+    color: #d8b4fe;
+    border: 1px solid rgba(216, 180, 254, 0.3);
+}
+
+/* ── Form Inputs Polish ── */
+.fi-simple-layout .fi-input-wrp {
     border-radius: 0.85rem !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
+    transition: all 0.2s ease !important;
 }
 
-/* ── Dark Mode Adjustments ── */
-.dark .fi-wi-stats-overview-stat {
-    border-color: rgba(255,255,255,0.08) !important;
+:root:not(.dark) .fi-simple-layout .fi-input-wrp {
+    background: #ffffff !important;
+    border: 1.5px solid rgba(19, 56, 94, 0.15) !important;
 }
 
-.dark .fi-section,
-.dark .fi-card {
-    border-color: rgba(255,255,255,0.07) !important;
+.fi-simple-layout .fi-input-wrp:focus-within {
+    border-color: #F6B219 !important;
+    box-shadow: 0 0 0 3px rgba(246, 178, 25, 0.22) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
 }
 
-/* ── Login Page ── */
-.fi-login-form {
-    border-radius: 1.5rem !important;
-    box-shadow: 0 20px 60px rgba(19, 56, 94, 0.15) !important;
+.fi-simple-layout .fi-fo-field-label {
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    color: rgba(255, 255, 255, 0.85) !important;
 }
 
-/* ── Scrollbar ── */
-.fi-sidebar::-webkit-scrollbar { width: 6px; }
-.fi-sidebar::-webkit-scrollbar-track { background: transparent; }
-.fi-sidebar::-webkit-scrollbar-thumb { background: rgba(246,178,25,0.3); border-radius: 3px; }
-.fi-sidebar::-webkit-scrollbar-thumb:hover { background: rgba(246,178,25,0.5); }
+:root:not(.dark) .fi-simple-layout .fi-fo-field-label {
+    color: #1e293b !important;
+}
+
+/* ── Primary Submit Button ── */
+.fi-simple-layout .fi-btn-color-primary {
+    background: linear-gradient(135deg, #13385E 0%, #2E7D32 55%, #246a2a 100%) !important;
+    border: 1px solid rgba(246, 178, 25, 0.45) !important;
+    border-radius: 0.85rem !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.02em !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 24px rgba(46, 125, 50, 0.35) !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.fi-simple-layout .fi-btn-color-primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 30px rgba(46, 125, 50, 0.5) !important;
+}
+
+.fi-simple-layout .fi-btn-color-primary:active {
+    transform: translateY(0) !important;
+}

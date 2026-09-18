@@ -13,8 +13,17 @@ use Filament\Tables\Table;
 class HighlightResource extends Resource
 {
     protected static ?string $model = Highlight::class;
-    protected static string | \UnitEnum | null $navigationGroup = 'Projects';
     protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? 'Miradi ya Elimu' : 'Educational Projects';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Vivutio & Mafanikio' : 'Highlights';
+    }
 
     public static function form(Schema $schema): Schema
     {

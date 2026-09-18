@@ -6,6 +6,7 @@ use App\Filament\Staff\Pages\Dashboard;
 use App\Filament\Staff\Widgets\StaffStatsWidget;
 use App\Filament\Staff\Widgets\StaffRecentStudentsWidget;
 use App\Filament\Staff\Widgets\StaffProjectsWidget;
+use App\Filament\Staff\Widgets\StaffWelcomeWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -30,12 +31,19 @@ class StaffPanelProvider extends PanelProvider
             ->id('staff')
             ->path('staff')
             ->login()
+            ->passwordReset()
             ->brandName('Hope for Students – Staff Portal')
             ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('3rem')
             ->favicon(asset('favicon.ico'))
             ->darkMode(true)
+            ->viteTheme('resources/css/filament/theme.css')
+            ->profile(\App\Filament\Pages\Auth\EditProfile::class, isSimple: false)
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
+            ->renderHook('panels::user-menu.before', fn () => view('filament.widgets.language-switcher'))
             ->renderHook('panels::head.end', fn () => '<link rel="stylesheet" href="' . asset('css/filament/hfst-panel.css') . '">')
+            ->renderHook('panels::auth.login.form.after', fn () => view('filament.auth.login-footer'))
             ->colors([
                 'primary' => Color::hex('#2E7D32'),
                 'success' => Color::hex('#2E7D32'),
@@ -56,7 +64,7 @@ class StaffPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Staff/Widgets'), for: 'App\Filament\Staff\Widgets')
             ->widgets([
-                \App\Filament\Staff\Widgets\StaffHeroWidget::class,
+                StaffWelcomeWidget::class,
                 StaffStatsWidget::class,
                 StaffRecentStudentsWidget::class,
                 StaffProjectsWidget::class,
@@ -66,6 +74,7 @@ class StaffPanelProvider extends PanelProvider
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
+                \App\Http\Middleware\SetLocale::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
                 PreventRequestForgery::class,

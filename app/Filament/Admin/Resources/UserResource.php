@@ -14,9 +14,17 @@ use Illuminate\Support\Facades\Hash;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
-    // protected static string | \BackedEnum | null $navigationIcon = null;
-    protected static string | \UnitEnum | null $navigationGroup = 'System';
     protected static ?int $navigationSort = 1;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? 'Usalama & Mfumo' : 'Security & System';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Watumiaji wa Mfumo' : 'User Accounts';
+    }
 
     public static function form(Schema $schema): Schema
     {
