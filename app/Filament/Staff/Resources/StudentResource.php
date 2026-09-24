@@ -17,28 +17,28 @@ class StudentResource extends Resource
     public static function getNavigationItems(): array
     {
         return [
-            \Filament\Navigation\NavigationItem::make('Kusajili Wanafunzi')
+            \Filament\Navigation\NavigationItem::make(fn () => app()->getLocale() === 'sw' ? 'Kusajili Wanafunzi' : 'Register Student')
                 ->url(fn (): string => static::getUrl('create'))
                 ->icon('heroicon-o-user-plus')
-                ->group('1. Usimamizi wa Wanafunzi')
+                ->group(fn () => app()->getLocale() === 'sw' ? '1. Usimamizi wa Wanafunzi' : '1. Student Management')
                 ->isActiveWhen(fn () => request()->routeIs(static::getRouteBaseName() . '.create')),
-            \Filament\Navigation\NavigationItem::make('Kuhifadhi Taarifa')
+            \Filament\Navigation\NavigationItem::make(fn () => app()->getLocale() === 'sw' ? 'Orodha ya Wanafunzi' : 'Student Records')
                 ->url(fn (): string => static::getUrl('index'))
                 ->icon('heroicon-o-pencil-square')
-                ->group('1. Usimamizi wa Wanafunzi')
+                ->group(fn () => app()->getLocale() === 'sw' ? '1. Usimamizi wa Wanafunzi' : '1. Student Management')
                 ->isActiveWhen(fn () => request()->routeIs(static::getRouteBaseName() . '.index')),
-            \Filament\Navigation\NavigationItem::make('Kupokea Nyaraka')
+            \Filament\Navigation\NavigationItem::make(fn () => app()->getLocale() === 'sw' ? 'Kupokea Nyaraka' : 'Student Documents')
                 ->url(fn (): string => static::getUrl('index'))
                 ->icon('heroicon-o-document-arrow-up')
-                ->group('1. Usimamizi wa Wanafunzi'),
-            \Filament\Navigation\NavigationItem::make('Kufuatilia Maendeleo')
+                ->group(fn () => app()->getLocale() === 'sw' ? '1. Usimamizi wa Wanafunzi' : '1. Student Management'),
+            \Filament\Navigation\NavigationItem::make(fn () => app()->getLocale() === 'sw' ? 'Kufuatilia Maendeleo' : 'Track Progress')
                 ->url(fn (): string => static::getUrl('index'))
                 ->icon('heroicon-o-chart-bar')
-                ->group('1. Usimamizi wa Wanafunzi'),
-            \Filament\Navigation\NavigationItem::make('Kuangalia Hali (Status)')
+                ->group(fn () => app()->getLocale() === 'sw' ? '1. Usimamizi wa Wanafunzi' : '1. Student Management'),
+            \Filament\Navigation\NavigationItem::make(fn () => app()->getLocale() === 'sw' ? 'Hali ya Wanafunzi (Status)' : 'Student Status')
                 ->url(fn (): string => static::getUrl('index'))
                 ->icon('heroicon-o-check-badge')
-                ->group('1. Usimamizi wa Wanafunzi'),
+                ->group(fn () => app()->getLocale() === 'sw' ? '1. Usimamizi wa Wanafunzi' : '1. Student Management'),
         ];
     }
     protected static ?string $recordTitleAttribute = 'first_name';

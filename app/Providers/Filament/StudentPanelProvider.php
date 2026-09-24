@@ -27,9 +27,9 @@ class StudentPanelProvider extends PanelProvider
             ->path('student')
             ->login()
             ->passwordReset()
-            ->brandName('HFST – Student Portal')
-            ->brandLogo(asset('images/logo.png'))
-            ->brandLogoHeight('3rem')
+            ->brandName(fn () => app()->getLocale() === 'sw' ? 'HFST – Mlango wa Mwanafunzi' : 'HFST – Student Portal')
+            ->brandLogo(fn () => view('filament.components.brand-logo'))
+            ->brandLogoHeight('auto')
             ->favicon(asset('favicon.ico'))
             ->darkMode(true)
             ->viteTheme('resources/css/filament/theme.css')
@@ -38,6 +38,7 @@ class StudentPanelProvider extends PanelProvider
             ->databaseNotificationsPolling('30s')
             ->renderHook('panels::user-menu.before', fn () => view('filament.widgets.language-switcher'))
             ->renderHook('panels::head.end', fn () => '<link rel="stylesheet" href="' . asset('css/filament/hfst-panel.css') . '">')
+            ->renderHook('panels::simple-layout.start', fn () => view('filament.auth.login-header'))
             ->renderHook('panels::auth.login.form.after', fn () => view('filament.auth.login-footer'))
             ->colors([
                 'primary' => Color::hex('#13385E'),
@@ -49,10 +50,10 @@ class StudentPanelProvider extends PanelProvider
             ])
 
             ->navigationGroups([
-                NavigationGroup::make('My Profile'),
-                NavigationGroup::make('Education'),
-                NavigationGroup::make('Support'),
-                NavigationGroup::make('Documents'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Wasifu Wangu' : 'My Profile'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Elimu na Masomo' : 'Education'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Usaidizi wa Masomo' : 'Support'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Nyaraka & Ripoti' : 'Documents'),
             ])
             ->discoverResources(
                 in: app_path('Filament/Student/Resources'),

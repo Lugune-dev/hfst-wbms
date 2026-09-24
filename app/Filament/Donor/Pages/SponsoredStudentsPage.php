@@ -10,9 +10,21 @@ class SponsoredStudentsPage extends Page
 {
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-academic-cap';
     protected string $view = 'filament.donor.pages.sponsored-students-page';
-    protected static ?string $navigationLabel = 'Sponsored Students';
-    protected static ?string $title = 'My Sponsored Students (Wanafunzi Wanaofadhiliwa)';
-    protected static string|\UnitEnum|null $navigationGroup = 'My Donations';
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Wanafunzi Wanaofadhiliwa' : 'Sponsored Students';
+    }
+
+    public function getTitle(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Wanafunzi Wangu Wanaofadhiliwa' : 'My Sponsored Students';
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? 'Michango Yangu' : 'My Donations';
+    }
+
     protected static ?int $navigationSort = 3;
 
     public function getSponsoredStudents(): \Illuminate\Support\Collection

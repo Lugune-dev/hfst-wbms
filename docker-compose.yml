@@ -1,0 +1,117 @@
+services:
+  # ==========================================================
+  # 1. Main Application Service (Nginx + PHP 8.3 FPM + Supervisor)
+  # ==========================================================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hfst-wbms:latest
+    container_name: hfst-wbms-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8000}:80"
+    environment:
+      APP_NAME: "${APP_NAME:-HFST-WBMS}"
+      APP_ENV: "${APP_ENV:-production}"
+      APP_DEBUG: "${APP_DEBUG:-false}"
+      APP_KEY: "${APP_KEY:-base64:VIldUajE5pmMU/R/OIQ6PECrotQVSmq9E2vWfWi8MXQ=}"
+      APP_URL: "${APP_URL:-http://localhost:8000}"
+      APP_LOCALE: "${APP_LOCALE:-en}"
+      APP_FALLBACK_LOCALE: "${APP_FALLBACK_LOCALE:-en}"
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: "${DB_DATABASE:-hope}"
+      DB_USERNAME: "${DB_USERNAME:-sheddy}"
+      DB_PASSWORD: "${DB_PASSWORD:-**Lugun7}"
+      CACHE_STORE: redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_CLIENT: predis
+      SESSION_DRIVER: database
+      SESSION_LIFETIME: 120
+      QUEUE_CONNECTION: sync
+      RUN_MIGRATIONS: "${RUN_MIGRATIONS:-true}"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - app_storage:/var/www/html/storage
+    networks:
+      - hfst-network
+
+  # ==========================================================
+  # 2. MySQL Database Service
+  # ==========================================================
+  mysql:
+    image: mysql:8.0
+    container_name: hfst-wbms-mysql
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE:-hope}"
+      MYSQL_USER: "${DB_USERNAME:-sheddy}"
+      MYSQL_PASSWORD: "${DB_PASSWORD:-**Lugun7}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD:-root_password_hfst}"
+    ports:
+      # Port 3307 on host avoids conflict if host runs MySQL on 3306
+      - "${DB_HOST_PORT:-3307}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-root_password_hfst}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    networks:
+      - hfst-network
+
+  # ==========================================================
+  # 3. Redis Cache Service
+  # ==========================================================
+  redis:
+    image: redis:alpine
+    container_name: hfst-wbms-redis-service
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      # Port 6380 on host avoids conflict with existing container on 6379
+      - "${REDIS_HOST_PORT:-6380}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - hfst-network
+
+  # ==========================================================
+  # 4. Optional phpMyAdmin (Database GUI)
+  # ==========================================================
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: hfst-wbms-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "${PMA_PORT:-8081}:80"
+    depends_on:
+      - mysql
+    networks:
+      - hfst-network
+
+volumes:
+  app_storage:
+    driver: local
+  mysql_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  hfst-network:
+    driver: bridge

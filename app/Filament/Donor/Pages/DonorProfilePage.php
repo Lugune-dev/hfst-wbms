@@ -19,9 +19,21 @@ class DonorProfilePage extends Page
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-circle';
     protected string $view = 'filament.donor.pages.donor-profile-page';
-    protected static ?string $navigationLabel = 'My Profile';
-    protected static ?string $title = 'My Profile & Privacy (Wasifu Wangu)';
-    protected static string|\UnitEnum|null $navigationGroup = 'Account';
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Wasifu Wangu' : 'My Profile';
+    }
+
+    public function getTitle(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Wasifu Wangu na Faragha' : 'My Profile & Privacy';
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? 'Akaunti Yangu' : 'Account';
+    }
+
     protected static ?int $navigationSort = 1;
 
     public ?array $data = [];

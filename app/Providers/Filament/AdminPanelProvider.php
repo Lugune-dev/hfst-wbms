@@ -35,9 +35,9 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->passwordReset()
-            ->brandName('Hope for Students Tanzania')
-            ->brandLogo(asset('images/logo.png'))
-            ->brandLogoHeight('3rem')
+            ->brandName(fn () => app()->getLocale() === 'sw' ? 'Hope for Students Tanzania – Usimamizi' : 'Hope for Students Tanzania')
+            ->brandLogo(fn () => view('filament.components.brand-logo'))
+            ->brandLogoHeight('auto')
             ->favicon(asset('favicon.ico'))
             ->darkMode(true)
             ->viteTheme('resources/css/filament/theme.css')
@@ -46,6 +46,7 @@ class AdminPanelProvider extends PanelProvider
             ->databaseNotificationsPolling('30s')
             ->renderHook('panels::user-menu.before', fn () => view('filament.widgets.language-switcher'))
             ->renderHook('panels::head.end', fn () => '<link rel="stylesheet" href="' . asset('css/filament/hfst-panel.css') . '">')
+            ->renderHook('panels::simple-layout.start', fn () => view('filament.auth.login-header'))
             ->renderHook('panels::auth.login.form.after', fn () => view('filament.auth.login-footer'))
             ->colors([
                 'primary' => Color::hex('#13385E'),

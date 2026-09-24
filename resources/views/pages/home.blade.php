@@ -366,186 +366,7 @@
         </div>
         @endif
 
-        <!-- Active Educational Fundraising Projects (Dynamic Showcase Layout) -->
-        <div class="pt-4">
-            <div class="flex items-center justify-between mb-8 pb-3 border-b border-slate-200/70 dark:border-white/10">
-                <div class="flex items-center gap-2.5">
-                    <span class="relative flex h-2.5 w-2.5">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
-                    </span>
-                    <span class="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                        {{ app()->getLocale() === 'sw' ? 'Kampeni za Michango Zinazoendelea' : 'Active Fundraising Campaigns' }}
-                    </span>
-                </div>
-                <span class="text-xs font-semibold text-slate-400">
-                    {{ $featuredProjects->count() }} {{ app()->getLocale() === 'sw' ? 'Mradi Unaohitaji Ufadhili' : 'Project Seeking Support' }}
-                </span>
-            </div>
 
-            @if($featuredProjects->count() === 1)
-                {{-- ULTRA-MODERN FEATURED HERO PROJECT CARD (Eliminates awkward 2-column empty space) --}}
-                @php $singleProject = $featuredProjects->first(); @endphp
-                <div class="rounded-3xl overflow-hidden border border-slate-200/80 dark:border-white/10 shadow-xl transition-all duration-500 hover:shadow-2xl"
-                     style="background: var(--surface-bg);">
-                    <div class="grid lg:grid-cols-12 gap-0 items-stretch">
-                        <!-- Project Image Column -->
-                        <div class="lg:col-span-6 relative min-h-[340px] sm:min-h-[420px] overflow-hidden group">
-                            <img src="{{ $singleProject->thumb_url ?? asset('images/hope.jpeg') }}"
-                                 alt="{{ $singleProject->name }}"
-                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                 onerror="this.onerror=null; this.src='{{ asset('images/hope.jpeg') }}';">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent"></div>
-
-                            <div class="absolute top-5 left-5 flex flex-wrap gap-2">
-                                <span class="px-3 py-1 rounded-full text-xs font-bold shadow-md flex items-center backdrop-blur-md bg-emerald-600/90 text-white">
-                                    <span class="w-2 h-2 rounded-full mr-2 animate-pulse bg-white"></span>
-                                    {{ __('projects.active') }}
-                                </span>
-                                <span class="px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md bg-slate-900/70 text-amber-300 border border-amber-400/30">
-                                    ⭐ Kipaumbele Kikuu
-                                </span>
-                            </div>
-
-                            <div class="absolute bottom-5 left-5 right-5 text-white">
-                                <div class="text-xs font-semibold text-emerald-300 uppercase tracking-wider mb-1">
-                                    {{ app()->getLocale() === 'sw' ? 'Kampeni Maalumu ya HFST' : 'Official HFST Initiative' }}
-                                </div>
-                                <div class="text-lg sm:text-xl font-bold leading-tight">
-                                    {{ $singleProject->name }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Project Details Column -->
-                        <div class="lg:col-span-6 p-7 sm:p-10 flex flex-col justify-between">
-                            <div>
-                                <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-2">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                                    <span>{{ app()->getLocale() === 'sw' ? 'Mradi Uliothibitishwa Kisheria' : 'Audited & Verified Campaign' }}</span>
-                                </div>
-                                <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-tight mb-4">
-                                    {{ $singleProject->name }}
-                                </h3>
-                                <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
-                                    {{ strip_tags($singleProject->description) }}
-                                </p>
-                            </div>
-
-                            <!-- Progress & Donation Metrics -->
-                            <div class="pt-6 border-t border-slate-200/70 dark:border-white/10">
-                                <div class="bg-white/70 dark:bg-slate-900/60 p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-white/10 shadow-xs mb-6">
-                                    <div class="flex justify-between items-baseline mb-2">
-                                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                                            {{ __('projects.progress') }}
-                                        </span>
-                                        <span class="text-xl font-black text-emerald-600 dark:text-emerald-400">
-                                            {{ $singleProject->funding_percentage }}%
-                                        </span>
-                                    </div>
-
-                                    <div class="w-full rounded-full h-3 overflow-hidden bg-slate-200 dark:bg-slate-700 progress-shimmer">
-                                        <div class="h-3 rounded-full transition-all duration-1000 ease-out"
-                                             style="width: {{ min(100, $singleProject->funding_percentage) }}%; background: linear-gradient(90deg, #f59e0b, #10b981);">
-                                        </div>
-                                    </div>
-
-                                    <div class="flex flex-col sm:flex-row justify-between text-sm mt-4 font-bold gap-2">
-                                        <div>
-                                            <span class="text-xs text-slate-400 font-normal block">{{ app()->getLocale() === 'sw' ? 'Kiasi Kilichopatikana' : 'Raised So Far' }}</span>
-                                            <span class="text-slate-900 dark:text-white text-base">TZS {{ number_format($singleProject->current_funding) }}</span>
-                                        </div>
-                                        <div class="sm:text-right">
-                                            <span class="text-xs text-slate-400 font-normal block">{{ app()->getLocale() === 'sw' ? 'Lengo Linalohitajika' : 'Funding Target' }}</span>
-                                            <span class="text-slate-600 dark:text-slate-300 text-base">TZS {{ number_format($singleProject->budget) }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex flex-col sm:flex-row items-center gap-4">
-                                    <a href="{{ route('donate') }}?project={{ $singleProject->id }}" 
-                                       class="w-full sm:flex-1 inline-flex items-center justify-center gap-3 px-8 py-4 text-base font-extrabold transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02]"
-                                       style="background: linear-gradient(135deg, var(--brand-yellow), #f59e0b); color: #0f2e4e;">
-                                        <span>{{ __('projects.donate_btn') }}</span>
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                                    </a>
-                                    <a href="{{ route('projects') }}" 
-                                       class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-4 text-sm font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10 transition">
-                                        {{ app()->getLocale() === 'sw' ? 'Maelezo Zaidi' : 'Learn More' }}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            @elseif($featuredProjects->count() > 1)
-                {{-- MULTI-CARD GRID FOR 2 OR MORE PROJECTS --}}
-                <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    @foreach($featuredProjects as $project)
-                    <div class="group relative rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col border border-slate-200/80 dark:border-white/10"
-                         style="background: var(--surface-bg);">
-                        <div class="relative h-60 w-full overflow-hidden">
-                            <img src="{{ $project->thumb_url ?? asset('images/hope.jpeg') }}"
-                                 alt="{{ $project->name }}"
-                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                 onerror="this.onerror=null; this.src='{{ asset('images/hope.jpeg') }}';">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent"></div>
-                            <div class="absolute top-4 right-4">
-                                <span class="px-3 py-1 rounded-full text-xs font-bold shadow-sm flex items-center backdrop-blur-md bg-emerald-600/90 text-white">
-                                    <span class="w-2 h-2 rounded-full mr-2 animate-pulse bg-white"></span>
-                                    {{ __('projects.active') }}
-                                </span>
-                            </div>
-                            <div class="absolute bottom-4 left-5 right-5 text-white z-10">
-                                <h3 class="text-xl font-bold mb-1 leading-tight">{{ $project->name }}</h3>
-                                <p class="text-xs text-slate-300 line-clamp-2">{{ Str::limit(strip_tags($project->description), 90) }}</p>
-                            </div>
-                        </div>
-                        <div class="p-6 flex-1 flex flex-col justify-between">
-                            <div>
-                                <div class="flex justify-between items-end mb-2 text-xs font-semibold">
-                                    <span class="text-slate-500">{{ __('projects.progress') }}</span>
-                                    <span class="text-base font-black text-emerald-600">{{ $project->funding_percentage }}%</span>
-                                </div>
-                                <div class="w-full rounded-full h-2.5 overflow-hidden bg-slate-200 dark:bg-slate-700 progress-shimmer">
-                                    <div class="h-2.5 rounded-full transition-all duration-1000 ease-out"
-                                         style="width: {{ min(100, $project->funding_percentage) }}%; background: linear-gradient(90deg, #f59e0b, #10b981);">
-                                    </div>
-                                </div>
-                                <div class="flex justify-between text-xs mt-3 font-semibold text-slate-700 dark:text-slate-300">
-                                    <span>TZS {{ number_format($project->current_funding) }}</span>
-                                    <span class="text-slate-400">Lengo: TZS {{ number_format($project->budget) }}</span>
-                                </div>
-                            </div>
-                            <a href="{{ route('donate') }}?project={{ $project->id }}" 
-                               class="mt-6 w-full inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold transition-all duration-300 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5"
-                               style="background: var(--brand-blue); color: white;">
-                                <span>{{ __('projects.donate_btn') }}</span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                            </a>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            @else
-                {{-- EMPTY STATE CARD (Never look broken or bare) --}}
-                <div class="text-center py-12 px-6 rounded-3xl border border-dashed border-slate-300 dark:border-white/10" style="background: var(--surface-bg);">
-                    <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 mx-auto flex items-center justify-center text-2xl mb-4">
-                        🌱
-                    </div>
-                    <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                        {{ app()->getLocale() === 'sw' ? 'Mfuko wa Ufadhili wa Wanafunzi Uko Wazi' : 'General Student Aid Fund is Open' }}
-                    </h4>
-                    <p class="text-sm text-slate-500 max-w-md mx-auto mb-6">
-                        {{ app()->getLocale() === 'sw' ? 'Unaweza kutoa mchango wa moja kwa moja kwenye mfuko mkuu wa ada, sare na vifaa kwa wanafunzi wenye uhitaji.' : 'You can contribute directly to our general scholarship fund providing tuition and stationery.' }}
-                    </p>
-                    <a href="{{ route('donate') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white shadow-md" style="background: var(--brand-blue);">
-                        <span>{{ __('nav.donate') }}</span>
-                    </a>
-                </div>
-            @endif
-        </div>
     </div>
 </section>
 
@@ -636,93 +457,229 @@
 </section>
 
 {{-- ======================================================
-     6. PARTNER SCHOOLS SHOWCASE
+{{-- ======================================================
+     6. PARTNER SCHOOLS CAROUSEL (Moves Right to Left)
 ====================================================== --}}
-<section class="py-24 sm:py-28 relative" style="background: var(--surface-bg);">
+@php
+    $schoolsCount = $partnerSchools->count();
+@endphp
+<section class="py-24 sm:py-28 relative overflow-hidden" 
+         style="background: var(--surface-bg);"
+         x-data="{
+             current: 0,
+             perPage: 3,
+             total: {{ $schoolsCount }},
+             autoplayTimer: null,
+             isHovered: false,
+             touchStartX: 0,
+             touchEndX: 0,
+
+             init() {
+                 this.updatePerPage();
+                 window.addEventListener('resize', () => this.updatePerPage());
+                 this.startAutoplay();
+             },
+
+             updatePerPage() {
+                 if (window.innerWidth < 640) {
+                     this.perPage = 1;
+                 } else if (window.innerWidth < 1024) {
+                     this.perPage = 2;
+                 } else if (window.innerWidth < 1280) {
+                     this.perPage = 3;
+                 } else {
+                     this.perPage = 4;
+                 }
+                 if (this.current > this.maxIndex()) {
+                     this.current = this.maxIndex();
+                 }
+             },
+
+             maxIndex() {
+                 return Math.max(0, this.total - this.perPage);
+             },
+
+             next() {
+                 if (this.current >= this.maxIndex()) {
+                     this.current = 0;
+                 } else {
+                     this.current++;
+                 }
+             },
+
+             prev() {
+                 if (this.current <= 0) {
+                     this.current = this.maxIndex();
+                 } else {
+                     this.current--;
+                 }
+             },
+
+             goTo(idx) {
+                 this.current = Math.min(Math.max(0, idx), this.maxIndex());
+             },
+
+             startAutoplay() {
+                 this.stopAutoplay();
+                 this.autoplayTimer = setInterval(() => {
+                     if (!this.isHovered && this.total > this.perPage) {
+                         this.next();
+                     }
+                 }, 4000);
+             },
+
+             stopAutoplay() {
+                 if (this.autoplayTimer) {
+                     clearInterval(this.autoplayTimer);
+                 }
+             },
+
+             handleTouchStart(e) {
+                 this.touchStartX = e.changedTouches[0].screenX;
+             },
+
+             handleTouchEnd(e) {
+                 this.touchEndX = e.changedTouches[0].screenX;
+                 if (this.touchStartX - this.touchEndX > 45) {
+                     this.next();
+                 } else if (this.touchEndX - this.touchStartX > 45) {
+                     this.prev();
+                 }
+             }
+         }"
+         @mouseenter="isHovered = true"
+         @mouseleave="isHovered = false">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/70 dark:border-emerald-700/30 mb-3">
-                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                <span>{{ app()->getLocale() === 'sw' ? 'Mtandao wa Shule Washirika' : 'Partner Schools Network' }}</span>
+        {{-- Section Header & Navigation Controls --}}
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/70 dark:border-emerald-700/30 mb-3">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>{{ app()->getLocale() === 'sw' ? 'Mtandao wa Shule Washirika' : 'Partner Schools Network' }}</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                    {{ app()->getLocale() === 'sw' ? 'Shule Zinazoshirikiana na HFST' : 'Schools Supported by HFST' }}
+                </h2>
+                <p class="mt-3 text-base text-slate-600 dark:text-slate-400">
+                    {{ app()->getLocale() === 'sw' 
+                        ? 'Tunafanya kazi bega kwa bega na walimu na uongozi wa shule kufuatilia ufaulu wa kitaaluma na ustawi wa wanafunzi.' 
+                        : 'Collaborating directly with teachers and school heads to track student attendance, academic excellence, and welfare.' }}
+                </p>
             </div>
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
-                {{ app()->getLocale() === 'sw' ? 'Shule Zinazoshirikiana na HFST' : 'Schools Supported by HFST' }}
-            </h2>
-            <p class="mt-3 text-base text-slate-600 dark:text-slate-400">
-                {{ app()->getLocale() === 'sw' 
-                    ? 'Tunafanya kazi bega kwa bega na walimu na uongozi wa shule kufuatilia ufaulu wa kitaaluma na ustawi wa wanafunzi.' 
-                    : 'Collaborating directly with teachers and school heads to track student attendance, academic excellence, and welfare.' }}
-            </p>
+
+            {{-- Action & Slider Controls --}}
+            <div class="flex items-center gap-3">
+                <a href="{{ route('schools') }}" 
+                   class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl font-bold text-xs text-emerald-700 dark:text-emerald-300 bg-emerald-50/80 dark:bg-emerald-900/30 border border-emerald-200/70 dark:border-emerald-700/30 hover:bg-emerald-100/80 dark:hover:bg-emerald-900/50 transition-all shadow-xs group">
+                    <span>{{ app()->getLocale() === 'sw' ? 'Shule Zote' : 'Browse All' }}</span>
+                    <svg class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+
+                {{-- Prev / Next Carousel Arrows --}}
+                <div class="flex items-center gap-2" x-show="total > 1">
+                    <button @click="prev()" 
+                            aria-label="Previous School" 
+                            class="w-11 h-11 rounded-2xl flex items-center justify-center bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-white/10 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all shadow-xs active:scale-95">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <button @click="next()" 
+                            aria-label="Next School" 
+                            class="w-11 h-11 rounded-2xl flex items-center justify-center bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-white/10 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all shadow-xs active:scale-95">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            @forelse($partnerSchools as $school)
-            @php
-                // Curate authentic high-quality fallback photo per school card
-                $schoolImages = ['hope2.jpeg', 'meet.jpeg', 'hope.jpeg', 'new.jpeg'];
-                $schoolImg = $schoolImages[$loop->index % count($schoolImages)];
-                $activeCount = $school->students()->where('status', 'Active')->count();
-            @endphp
-            <div class="rounded-3xl overflow-hidden flex flex-col border border-slate-200/80 dark:border-white/10 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group"
-                 style="background: var(--surface-card);">
-                
-                <!-- School Banner Photo -->
-                <div class="h-36 w-full overflow-hidden relative">
-                    <img src="{{ $school->image_url ?? asset('images/' . $schoolImg) }}" 
-                         alt="{{ $school->name }}" 
-                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
-                    
-                    <div class="absolute top-3 left-3">
-                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold text-white bg-emerald-600/90 backdrop-blur-md flex items-center gap-1 shadow-xs">
-                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            <span>{{ app()->getLocale() === 'sw' ? 'Mshirika Rasmi' : 'Verified Partner' }}</span>
-                        </span>
-                    </div>
+        @if($schoolsCount > 0)
+            {{-- Carousel Track (Smoothly moves from right to left) --}}
+            <div class="overflow-hidden py-3 -my-3 px-1 -mx-1"
+                 @touchstart.passive="handleTouchStart($event)"
+                 @touchend.passive="handleTouchEnd($event)">
+                <div class="flex transition-transform duration-700 ease-out"
+                     :style="`transform: translateX(-${current * (100 / perPage)}%);`">
+                    @foreach($partnerSchools as $school)
+                    @php
+                        $schoolImages = ['hope2.jpeg', 'meet.jpeg', 'hope.jpeg', 'new.jpeg', 'hope1.jpeg'];
+                        $schoolImg = $schoolImages[$loop->index % count($schoolImages)];
+                        $activeCount = $school->students_count ?? $school->students()->where('status', 'Active')->count();
+                    @endphp
+                    <div class="flex-shrink-0 px-3 sm:px-3.5"
+                         :style="`width: ${100 / perPage}%;`">
+                        <div class="rounded-3xl overflow-hidden flex flex-col justify-between border border-slate-200/80 dark:border-white/10 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group h-full shadow-sm"
+                             style="background: var(--surface-card);">
+                            
+                            <!-- School Banner Photo -->
+                            <div class="h-44 w-full overflow-hidden relative">
+                                <img src="{{ $school->image_url ?? asset('images/' . $schoolImg) }}" 
+                                     alt="{{ $school->name }}" 
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>
+                                
+                                <div class="absolute top-3.5 left-3.5">
+                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold text-white bg-emerald-600/90 backdrop-blur-md flex items-center gap-1 shadow-xs">
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                        <span>{{ app()->getLocale() === 'sw' ? 'Mshirika Rasmi' : 'Verified Partner' }}</span>
+                                    </span>
+                                </div>
 
-                    <div class="absolute top-3 right-3">
-                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold text-slate-900 bg-amber-400 shadow-xs">
-                            {{ $school->education_level ?? 'Secondary' }}
-                        </span>
-                    </div>
+                                <div class="absolute top-3.5 right-3.5">
+                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold text-slate-900 bg-amber-400 shadow-xs">
+                                        {{ $school->education_level ?? 'Secondary' }}
+                                    </span>
+                                </div>
 
-                    <div class="absolute bottom-2.5 left-3.5 right-3.5 text-white">
-                        <p class="text-[11px] font-medium text-slate-200 flex items-center gap-1">
-                            <span>📍</span>
-                            <span>{{ $school->region ?? 'Arusha' }} · {{ $school->district ?? 'Tanzania' }}</span>
-                        </p>
-                    </div>
-                </div>
+                                <div class="absolute bottom-3 left-3.5 right-3.5 text-white">
+                                    <p class="text-[11px] font-semibold text-slate-200 flex items-center gap-1">
+                                        <span>📍</span>
+                                        <span>{{ $school->region ?? 'Arusha' }} · {{ $school->district ?? 'Tanzania' }}</span>
+                                    </p>
+                                </div>
+                            </div>
 
-                <!-- Card Body -->
-                <div class="p-5 sm:p-6 flex-1 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-black text-base sm:text-lg text-slate-900 dark:text-white mb-2 leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                            {{ $school->name }}
-                        </h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
-                            {{ $school->address ?? ($school->ward ? $school->ward . ', ' . $school->district : 'Shule mshirika inayosaidia wanafunzi wa mazingira magumu.') }}
-                        </p>
-                    </div>
+                            <!-- Card Body -->
+                            <div class="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="font-black text-base sm:text-lg text-slate-900 dark:text-white mb-2 leading-snug group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1">
+                                        {{ $school->name }}
+                                    </h3>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                                        {{ $school->address ?? ($school->ward ? $school->ward . ', ' . $school->district : 'Shule mshirika inayosaidia wanafunzi wa mazingira magumu.') }}
+                                    </p>
+                                </div>
 
-                    <div class="mt-5 pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between text-xs">
-                        <div class="flex items-center gap-1.5 font-bold {{ $activeCount > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500' }}">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/></svg>
-                            <span>{{ $activeCount }} {{ app()->getLocale() === 'sw' ? 'Wanafunzi' : 'Students' }}</span>
+                                <div class="mt-5 pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between text-xs">
+                                    <div class="flex items-center gap-1.5 font-bold {{ $activeCount > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500' }}">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/></svg>
+                                        <span>{{ $activeCount }} {{ app()->getLocale() === 'sw' ? 'Wanafunzi' : 'Students' }}</span>
+                                    </div>
+                                    <a href="{{ route('schools') }}" class="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1 group-hover:gap-1.5 transition-all text-xs">
+                                        <span>{{ app()->getLocale() === 'sw' ? 'Tazama' : 'View' }}</span>
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <a href="{{ route('schools') }}" class="font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1 group-hover:gap-1.5 transition-all text-xs">
-                            <span>{{ app()->getLocale() === 'sw' ? 'Tazama' : 'View' }}</span>
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                        </a>
                     </div>
+                    @endforeach
                 </div>
             </div>
-            @empty
-                <div class="col-span-4 text-center text-slate-400 py-12">No partner schools listed.</div>
-            @endforelse
-        </div>
 
-        <div class="text-center mt-12">
+            {{-- Slider Dot Indicators --}}
+            <div class="flex items-center justify-center gap-2 mt-8" x-show="maxIndex() > 0">
+                <template x-for="i in (maxIndex() + 1)" :key="i">
+                    <button @click="goTo(i - 1)" 
+                            :class="current === (i - 1) ? 'w-8 bg-emerald-600 dark:bg-emerald-400' : 'w-2.5 bg-slate-300 dark:bg-slate-700 hover:bg-emerald-500/50'"
+                            class="h-2.5 rounded-full transition-all duration-300 focus:outline-none"
+                            :aria-label="'Nenda ukurasa wa ' + i">
+                    </button>
+                </template>
+            </div>
+        @else
+            <div class="text-center text-slate-400 py-12">No partner schools listed.</div>
+        @endif
+
+        <div class="text-center mt-10">
             <a href="{{ route('schools') }}" 
                class="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm text-slate-900 dark:text-white bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-slate-200 dark:hover:bg-white/10 transition-all shadow-xs">
                 <span>{{ app()->getLocale() === 'sw' ? 'Gundua Mtandao Kamili wa Shule Washirika' : 'Explore All Partner Schools' }}</span>

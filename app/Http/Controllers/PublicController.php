@@ -42,7 +42,9 @@ class PublicController extends Controller
         $latestNews       = Post::where('status', 'published')->latest('published_at')->take(10)->get();
         $testimonials     = Testimonial::where('is_featured', true)->latest()->take(3)->get();
         $highlights       = Highlight::where('is_active', true)->orderBy('sort_order')->get();
-        $partnerSchools   = School::where('is_active', true)->take(4)->get();
+        $partnerSchools   = School::where('is_active', true)
+            ->withCount(['students' => fn($q) => $q->where('status', 'Active')])
+            ->get();
 
         return view('pages.home', array_merge($stats, compact(
             'featuredProjects',
@@ -382,9 +384,15 @@ class PublicController extends Controller
         $supported = ['en', 'sw', 'fr'];
         if (in_array($locale, $supported)) {
             session(['locale' => $locale]);
-            cookie()->queue('hfst_locale', $locale, 60 * 24 * 365);
+            cookie()->queue(cookie()->forever('hfst_locale', $locale, '/', null, false, false));
             \Illuminate\Support\Facades\App::setLocale($locale);
         }
-        return redirect()->back();
+
+        $fallback = url()->previous();
+        if (!$fallback || str_contains($fallback, '/language/')) {
+            $fallback = url('/');
+        }
+
+        return redirect()->to($fallback)->withCookie(cookie()->forever('hfst_locale', $locale, '/', null, false, false));
     }
 }

@@ -15,9 +15,26 @@ class AidApplicationResource extends Resource
 {
     protected static ?string $model = AidApplication::class;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-hand-raised';
-    protected static ?string $navigationLabel = 'Maombi ya Msaada (Aid Requests)';
-    protected static ?string $pluralModelLabel = 'Maombi Yangu ya Msaada';
-    protected static string|\UnitEnum|null $navigationGroup = 'Msaada wa Masomo / Aid Support';
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Maombi ya Msaada' : 'Aid Requests';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Maombi Yangu ya Msaada' : 'My Aid Requests';
+    }
+
+    public static function getModelLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Ombi la Msaada' : 'Aid Request';
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? 'Usaidizi wa Masomo' : 'Support';
+    }
+
     protected static ?int $navigationSort = 1;
 
     public static function getEloquentQuery(): Builder

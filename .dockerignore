@@ -1,0 +1,38 @@
+# Git and local files
+.git
+.github
+.gitignore
+.editorconfig
+
+# Dependencies
+/node_modules
+/vendor
+
+# Environment files
+.env
+.env.backup
+.env.production
+*.local
+
+# Tests and caches
+/tests
+.phpunit.result.cache
+phpunit.xml
+
+# Storage runtime files (kept in named volume)
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
+
+# IDE and OS files
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+npm-debug.log
+yarn-error.log
+
+# Temporary build scripts
+er->password*
+fix_actions.php

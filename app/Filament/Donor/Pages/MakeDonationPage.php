@@ -23,9 +23,21 @@ class MakeDonationPage extends Page
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
     protected string $view = 'filament.donor.pages.make-donation-page';
-    protected static ?string $navigationLabel = 'Make a Donation';
-    protected static ?string $title = 'Make a Donation (Toa Mchango)';
-    protected static string|\UnitEnum|null $navigationGroup = 'My Donations';
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Toa Mchango' : 'Make a Donation';
+    }
+
+    public function getTitle(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Kutoa Mchango Mpya' : 'Make a Donation';
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? 'Michango Yangu' : 'My Donations';
+    }
+
     protected static ?int $navigationSort = 1;
 
     public ?array $data = [];

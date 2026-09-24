@@ -14,7 +14,26 @@ class DonationResource extends Resource
 {
     protected static ?string $model = Donation::class;
     // protected static string | \BackedEnum | null $navigationIcon = 'null';
-    protected static string | \UnitEnum | null $navigationGroup = 'Finance';
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Michango' : 'Donations';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Michango' : 'Donations';
+    }
+
+    public static function getModelLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Mchango' : 'Donation';
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? '3. Fedha & Michango' : '3. Finance & Donations';
+    }
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema

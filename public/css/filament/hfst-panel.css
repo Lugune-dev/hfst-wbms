@@ -1,20 +1,146 @@
 /* =====================================================
-   HFST – Custom Filament Panel Styles
-   Brand: Deep Blue #13385E | Leaf Green #2E7D32 | Gold #F6B219
+   HFST – Executive Filament Design System
+   Brand Palette:
+   Deep Navy Blue : #13385E
+   Leaf Green     : #2E7D32
+   Safari Gold    : #F6B219
    ===================================================== */
 
-/* ── Round Logo in Sidebar ── */
-.fi-logo img,
-.fi-sidebar-nav .fi-logo img {
-    border-radius: 9999px !important;
-    object-fit: cover !important;
-    border: 3px solid rgba(246, 178, 25, 0.5);
-    box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.2);
-    padding: 2px;
-    background: white;
+/* =====================================================
+   1. MODERN HFST BRAND LOGO SYSTEM (Dashboard & Auth)
+   ===================================================== */
+
+.fi-logo {
+    display: inline-flex !important;
+    align-items: center !important;
+    height: auto !important;
+    text-decoration: none !important;
 }
 
-/* ── Modern Executive Sidebar ── */
+.hfst-brand-root {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    text-decoration: none;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Dashboard Sidebar & Topbar Emblem ── */
+.hfst-emblem-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.hfst-emblem-box {
+    position: relative;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.85rem;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    box-shadow: 
+        0 4px 14px rgba(0, 0, 0, 0.12),
+        0 0 0 2px rgba(246, 178, 25, 0.55),
+        0 0 0 4px rgba(46, 125, 50, 0.2);
+    transition: all 0.25s ease;
+    z-index: 2;
+}
+
+.dark .hfst-emblem-box {
+    background: linear-gradient(135deg, #0e243a 0%, #071728 100%);
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.45),
+        0 0 0 2px rgba(246, 178, 25, 0.45),
+        0 0 14px rgba(246, 178, 25, 0.25);
+}
+
+.hfst-brand-root:hover .hfst-emblem-box {
+    transform: scale(1.05);
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.25),
+        0 0 0 2px #F6B219,
+        0 0 18px rgba(246, 178, 25, 0.45);
+}
+
+.hfst-emblem-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 0.6rem;
+}
+
+.hfst-brand-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    line-height: 1.15;
+}
+
+.hfst-brand-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.hfst-brand-title {
+    font-size: 1.25rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    font-family: inherit;
+}
+
+:root:not(.dark) .fi-topbar .hfst-brand-title {
+    color: #13385E;
+}
+
+.hfst-status-pulse {
+    width: 7px;
+    height: 7px;
+    background: #22c55e;
+    border-radius: 9999px;
+    box-shadow: 0 0 8px #22c55e;
+    animation: hfst-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes hfst-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.hfst-brand-subtitle {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #F6B219;
+    margin-top: 1px;
+}
+
+/* Hide auth-specific details when in dashboard */
+.hfst-auth-brand-info {
+    display: none;
+}
+
+/* Fallback for native fi-logo img if rendered directly */
+.fi-logo img {
+    border-radius: 0.75rem !important;
+    object-fit: contain !important;
+    border: 2px solid rgba(246, 178, 25, 0.5) !important;
+    background: #ffffff !important;
+    padding: 2px !important;
+}
+
+/* =====================================================
+   2. MODERN EXECUTIVE SIDEBAR
+   ===================================================== */
 .fi-sidebar {
     background: #091A2F !important;
     border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -32,7 +158,6 @@
     background: linear-gradient(180deg, #050e18 0%, #0a1e30 40%, #071510 100%) !important;
 }
 
-/* ── Sidebar Nav Items ── */
 .fi-sidebar-nav-group-label {
     font-size: 0.68rem !important;
     font-weight: 700 !important;
@@ -70,51 +195,94 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* ── Top Header ── */
+/* =====================================================
+   3. TOPBAR & DASHBOARD POLISH
+   ===================================================== */
 .fi-topbar {
-    border-bottom: 1px solid rgba(19, 56, 94, 0.15) !important;
-    backdrop-filter: blur(8px) !important;
-}
-
-/* ── Stats Cards ── */
-.fi-wi-stats-overview-stat {
-    border-radius: 1rem !important;
-    border: 1px solid rgba(19, 56, 94, 0.08) !important;
-    transition: transform 0.2s, box-shadow 0.2s !important;
-}
-
-.fi-wi-stats-overview-stat:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1) !important;
-}
-
-/* ── Page Title ── */
-.fi-page-title {
-    font-weight: 900 !important;
-    letter-spacing: -0.02em !important;
-}
-
-/* ── Top Header ── */
-.fi-topbar {
-    border-bottom: 1px solid rgba(19, 56, 94, 0.15) !important;
-    backdrop-filter: blur(8px) !important;
-    background: rgba(255, 255, 255, 0.75) !important;
+    border-bottom: 1px solid rgba(19, 56, 94, 0.12) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    transition: background 0.3s ease, border-color 0.3s ease !important;
 }
 
 .dark .fi-topbar {
-    background: rgba(10, 20, 32, 0.7) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    background: rgba(10, 20, 32, 0.82) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
-/* =====================================================
-   MODERN DASHBOARD POLISH
-   ===================================================== */
+/* Modern segmented pill language switcher in dashboard */
+.hfst-topbar-lang-pill {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(19, 56, 94, 0.07);
+    border: 1px solid rgba(19, 56, 94, 0.15);
+    border-radius: 9999px;
+    padding: 2px 4px;
+    margin-right: 0.5rem;
+    gap: 2px;
+}
 
-/* ── Widget Section Cards ── */
+.dark .hfst-topbar-lang-pill {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.hfst-topbar-lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #64748b;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.dark .hfst-topbar-lang-btn {
+    color: #94a3b8;
+}
+
+.hfst-topbar-lang-btn:hover {
+    color: #0f172a;
+    background: rgba(19, 56, 94, 0.08);
+}
+
+.dark .hfst-topbar-lang-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.hfst-topbar-lang-active {
+    background: #13385E !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(19, 56, 94, 0.35);
+}
+
+.dark .hfst-topbar-lang-active {
+    background: linear-gradient(135deg, rgba(246, 178, 25, 0.3), rgba(246, 178, 25, 0.15)) !important;
+    color: #F6B219 !important;
+    border: 1px solid rgba(246, 178, 25, 0.5);
+    box-shadow: 0 0 10px rgba(246, 178, 25, 0.25);
+}
+
+.hfst-topbar-divider {
+    width: 1px;
+    height: 12px;
+    background: rgba(19, 56, 94, 0.15);
+}
+
+.dark .hfst-topbar-divider {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* ── Section Cards ── */
 .fi-section {
-    border-radius: 1.1rem !important;
+    border-radius: 1.15rem !important;
     border: 1px solid rgba(19, 56, 94, 0.08) !important;
-    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04) !important;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04) !important;
     transition: box-shadow 0.25s ease, transform 0.25s ease !important;
 }
 
@@ -123,7 +291,7 @@
 }
 
 .dark .fi-section {
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
 }
 
 .fi-section-header-heading {
@@ -131,53 +299,24 @@
     letter-spacing: -0.01em !important;
 }
 
-/* ── Fade / slide-in entrance for dashboard widgets ── */
-@keyframes hfst-fade-up {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-.fi-wi,
-.fi-section,
+/* ── Stats Overview Cards ── */
 .fi-wi-stats-overview-stat {
-    animation: hfst-fade-up 0.45s ease both;
+    border-radius: 1.15rem !important;
+    border: 1px solid rgba(19, 56, 94, 0.08) !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
 }
 
-.fi-wi-stats-overview-stats > *:nth-child(2) { animation-delay: 0.05s; }
-.fi-wi-stats-overview-stats > *:nth-child(3) { animation-delay: 0.1s; }
-.fi-wi-stats-overview-stats > *:nth-child(4) { animation-delay: 0.15s; }
-.fi-wi-stats-overview-stats > *:nth-child(5) { animation-delay: 0.2s; }
-.fi-wi-stats-overview-stats > *:nth-child(6) { animation-delay: 0.25s; }
-
-@media (prefers-reduced-motion: reduce) {
-    .fi-wi, .fi-section, .fi-wi-stats-overview-stat {
-        animation: none !important;
-    }
+.fi-wi-stats-overview-stat:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09) !important;
 }
 
-/* ── Stat value emphasis ── */
 .fi-wi-stats-overview-stat-value {
     font-weight: 900 !important;
     letter-spacing: -0.02em !important;
 }
 
-/* ── Buttons ── */
-.fi-btn {
-    border-radius: 0.65rem !important;
-    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
-}
-
-.fi-btn:hover {
-    transform: translateY(-1px) !important;
-}
-
-/* ── Badges ── */
-.fi-badge {
-    border-radius: 9999px !important;
-    font-weight: 700 !important;
-}
-
-/* ── Tables ── */
+/* ── Tables & Buttons ── */
 .fi-ta-table {
     border-radius: 0.9rem !important;
     overflow: hidden !important;
@@ -191,201 +330,539 @@
     background: rgba(255, 255, 255, 0.03) !important;
 }
 
-/* ── Custom scrollbar ── */
-::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+.fi-btn {
+    border-radius: 0.65rem !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
 }
 
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(19, 56, 94, 0.25);
-    border-radius: 9999px;
-    border: 2px solid transparent;
-    background-clip: content-box;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-    background: rgba(246, 178, 25, 0.3);
-    background-clip: content-box;
-}
-
-/* ── Chart widget card ── */
-.fi-wi-chart {
-    border-radius: 1.1rem !important;
+.fi-btn:hover {
+    transform: translateY(-1px) !important;
 }
 
 /* =====================================================
-   ULTRA-MODERN AUTH & LOGIN SCREENS
+   4. ULTRA-MODERN AUTH & LOGIN SCREENS (Theme-Adaptive)
    ===================================================== */
 
-/* ── Fullscreen Ambient Backdrop ── */
+/* ── Fullscreen Backdrop: Dynamic Light & Dark ── */
 .fi-simple-layout {
-    background-color: #061325 !important;
-    background-image: 
-        radial-gradient(circle at 10% 20%, rgba(46, 125, 50, 0.22) 0%, transparent 45%),
-        radial-gradient(circle at 90% 80%, rgba(246, 178, 25, 0.18) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(19, 56, 94, 0.45) 0%, transparent 75%),
-        linear-gradient(180deg, #050e1b 0%, #0a1f38 100%) !important;
     min-height: 100vh !important;
     display: flex !important;
+    flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 2rem 1rem !important;
+    padding: 1.25rem 1rem 2.5rem 1rem !important;
     position: relative !important;
+    transition: background 0.4s ease, color 0.4s ease !important;
 }
 
-/* ── Glassmorphic Login Container Card ── */
+/* Day Mode (Light Theme) */
+html:not(.dark) .fi-simple-layout {
+    background-color: #f1f5f9 !important;
+    background-image: 
+        radial-gradient(circle at 10% 15%, rgba(46, 125, 50, 0.09) 0%, transparent 45%),
+        radial-gradient(circle at 90% 85%, rgba(246, 178, 25, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(19, 56, 94, 0.07) 0%, transparent 70%),
+        linear-gradient(180deg, #f8fafc 0%, #edf2f7 50%, #e2e8f0 100%) !important;
+    color: #0f172a !important;
+}
+
+/* Night Mode (Dark Theme) */
+html.dark .fi-simple-layout {
+    background-color: #061325 !important;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(46, 125, 50, 0.24) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(246, 178, 25, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(19, 56, 94, 0.5) 0%, transparent 75%),
+        linear-gradient(180deg, #050e1b 0%, #0a1f38 100%) !important;
+    color: #f8fafc !important;
+}
+
+/* ── Interactive Login Topbar (Theme & Language Switchers) ── */
+.hfst-login-topbar {
+    width: 100%;
+    max-width: 32rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding: 0.4rem 0.5rem;
+    z-index: 50;
+}
+
+.hfst-login-nav-left {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.hfst-login-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 0.4rem 0.75rem;
+    border-radius: 9999px;
+    transition: all 0.2s ease;
+}
+
+html:not(.dark) .hfst-login-nav-link {
+    color: #334155;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(19, 56, 94, 0.12);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+html:not(.dark) .hfst-login-nav-link:hover {
+    color: #13385E;
+    background: #ffffff;
+    border-color: #13385E;
+    transform: translateY(-1px);
+}
+
+html.dark .hfst-login-nav-link {
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+html.dark .hfst-login-nav-link:hover {
+    color: #F6B219;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(246, 178, 25, 0.5);
+    transform: translateY(-1px);
+}
+
+.hfst-login-sep {
+    color: #94a3b8;
+    font-size: 0.75rem;
+}
+
+.hfst-login-nav-right {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Language Pill on Login Screen */
+.hfst-lang-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 4px;
+    border-radius: 9999px;
+    gap: 2px;
+}
+
+html:not(.dark) .hfst-lang-pill {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(19, 56, 94, 0.15);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+html.dark .hfst-lang-pill {
+    background: rgba(14, 28, 48, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.hfst-lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 3px 7px;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+html:not(.dark) .hfst-lang-btn {
+    color: #475569;
+}
+
+html:not(.dark) .hfst-lang-btn:hover {
+    color: #13385E;
+    background: rgba(19, 56, 94, 0.07);
+}
+
+html.dark .hfst-lang-btn {
+    color: #94a3b8;
+}
+
+html.dark .hfst-lang-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+html:not(.dark) .hfst-lang-active {
+    background: #13385E !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(19, 56, 94, 0.25);
+}
+
+html.dark .hfst-lang-active {
+    background: rgba(246, 178, 25, 0.22) !important;
+    color: #F6B219 !important;
+    border: 1px solid rgba(246, 178, 25, 0.45);
+    box-shadow: 0 0 8px rgba(246, 178, 25, 0.3);
+}
+
+.hfst-pill-divider {
+    width: 1px;
+    height: 12px;
+    background: rgba(120, 120, 120, 0.25);
+}
+
+/* Theme Switcher Segmented Pill on Login Screen */
+.hfst-theme-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px;
+    border-radius: 9999px;
+    gap: 2px;
+}
+
+html:not(.dark) .hfst-theme-pill {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(19, 56, 94, 0.15);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+html.dark .hfst-theme-pill {
+    background: rgba(14, 28, 48, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.hfst-theme-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 9999px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+html:not(.dark) .hfst-theme-btn {
+    color: #64748b;
+}
+
+html:not(.dark) .hfst-theme-btn:hover {
+    color: #13385E;
+    background: rgba(19, 56, 94, 0.08);
+}
+
+html.dark .hfst-theme-btn {
+    color: #94a3b8;
+}
+
+html.dark .hfst-theme-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+html:not(.dark) .hfst-theme-active {
+    background: #13385E !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(19, 56, 94, 0.25);
+}
+
+html.dark .hfst-theme-active {
+    background: rgba(246, 178, 25, 0.25) !important;
+    color: #F6B219 !important;
+    border: 1px solid rgba(246, 178, 25, 0.45);
+    box-shadow: 0 0 10px rgba(246, 178, 25, 0.35);
+}
+
+/* ── Modern Glassmorphic Login Container Card ── */
 .fi-simple-main {
-    background: rgba(14, 28, 48, 0.82) !important;
-    backdrop-filter: blur(24px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.14) !important;
-    border-radius: 1.75rem !important;
-    box-shadow: 
-        0 25px 50px -12px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(246, 178, 25, 0.12),
-        inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
-    padding: 2.75rem 2.25rem !important;
     max-width: 28rem !important;
     width: 100% !important;
-    animation: hfst-login-entrance 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+    padding: 2.25rem 2rem !important;
+    border-radius: 1.75rem !important;
+    transition: all 0.3s ease !important;
+    animation: hfst-login-entrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes hfst-login-entrance {
-    from {
-        opacity: 0;
-        transform: translateY(18px) scale(0.98);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Light mode support */
-:root:not(.dark) .fi-simple-main {
+/* Light Mode Card */
+html:not(.dark) .fi-simple-main {
     background: rgba(255, 255, 255, 0.94) !important;
-    border: 1px solid rgba(19, 56, 94, 0.15) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1.5px solid rgba(19, 56, 94, 0.12) !important;
     box-shadow: 
-        0 20px 40px -10px rgba(19, 56, 94, 0.15),
-        0 0 0 1px rgba(246, 178, 25, 0.2) !important;
+        0 25px 50px -12px rgba(19, 56, 94, 0.16),
+        0 0 0 1px rgba(246, 178, 25, 0.22),
+        inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
 }
 
-/* ── Branded Logo Display ── */
+/* Dark Mode Card */
+html.dark .fi-simple-main {
+    background: rgba(14, 28, 48, 0.84) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.13) !important;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.65),
+        0 0 0 1px rgba(246, 178, 25, 0.14),
+        inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ── Modern Logo on Login Page ── */
+.fi-simple-header {
+    margin-bottom: 1.5rem !important;
+}
+
 .fi-simple-header .fi-logo {
     display: flex !important;
     justify-content: center !important;
-    margin-bottom: 1.25rem !important;
+    margin-bottom: 0.75rem !important;
 }
 
-.fi-simple-header .fi-logo img {
-    height: 4.5rem !important;
-    width: 4.5rem !important;
-    border-radius: 9999px !important;
-    border: 3px solid #F6B219 !important;
-    box-shadow: 0 0 20px rgba(246, 178, 25, 0.35), 0 0 0 4px rgba(46, 125, 50, 0.25) !important;
+.fi-simple-header .hfst-brand-root {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 0.75rem !important;
+}
+
+.fi-simple-header .hfst-brand-info {
+    display: none !important;
+}
+
+.fi-simple-header .hfst-auth-brand-info {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.25rem !important;
+}
+
+.fi-simple-header .hfst-emblem-box {
+    width: 4.8rem !important;
+    height: 4.8rem !important;
+    border-radius: 1.4rem !important;
+    padding: 0.45rem !important;
     background: #ffffff !important;
-    padding: 3px !important;
+    border: 2.5px solid rgba(246, 178, 25, 0.7) !important;
+    box-shadow: 
+        0 12px 30px rgba(0, 0, 0, 0.2),
+        0 0 0 4px rgba(46, 125, 50, 0.2),
+        0 0 25px rgba(246, 178, 25, 0.3) !important;
 }
 
-/* ── Header Title & Subtitle ── */
+html.dark .fi-simple-header .hfst-emblem-box {
+    background: linear-gradient(135deg, #0e2238 0%, #061322 100%) !important;
+    border: 2.5px solid rgba(246, 178, 25, 0.6) !important;
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.55),
+        0 0 0 4px rgba(46, 125, 50, 0.3),
+        0 0 30px rgba(246, 178, 25, 0.4) !important;
+}
+
+.fi-simple-header .hfst-emblem-halo {
+    position: absolute;
+    inset: -12px;
+    border-radius: 2rem;
+    background: radial-gradient(circle, rgba(246, 178, 25, 0.25) 0%, rgba(46, 125, 50, 0.2) 50%, transparent 70%);
+    filter: blur(10px);
+    z-index: 1;
+    animation: hfst-halo-pulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes hfst-halo-pulse {
+    0% { transform: scale(0.95); opacity: 0.55; }
+    100% { transform: scale(1.1); opacity: 0.95; }
+}
+
+.hfst-auth-org-title {
+    font-size: 1.25rem !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.02em !important;
+}
+
+html:not(.dark) .hfst-auth-org-title {
+    background: linear-gradient(135deg, #13385E 0%, #2E7D32 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+html.dark .hfst-auth-org-title {
+    background: linear-gradient(135deg, #ffffff 0%, #93c5fd 50%, #F6B219 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hfst-auth-org-subtitle {
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+}
+
+html:not(.dark) .hfst-auth-org-subtitle {
+    color: #475569 !important;
+}
+
+html.dark .hfst-auth-org-subtitle {
+    color: #94a3b8 !important;
+}
+
+.hfst-auth-gateway-badge {
+    margin-top: 0.35rem !important;
+    padding: 0.32rem 0.9rem !important;
+    font-size: 0.68rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    border-radius: 9999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+}
+
+html:not(.dark) .hfst-auth-gateway-badge {
+    background: rgba(19, 56, 94, 0.08) !important;
+    color: #13385E !important;
+    border: 1px solid rgba(19, 56, 94, 0.2) !important;
+}
+
+html.dark .hfst-auth-gateway-badge {
+    background: rgba(246, 178, 25, 0.12) !important;
+    color: #fde047 !important;
+    border: 1px solid rgba(246, 178, 25, 0.35) !important;
+}
+
+/* Hide old hardcoded CSS pseudo-element badge */
+.fi-simple-header:after {
+    display: none !important;
+    content: none !important;
+}
+
+/* ── Heading Polish ── */
 .fi-simple-header-heading {
-    font-size: 1.55rem !important;
+    font-size: 1.45rem !important;
     font-weight: 900 !important;
     text-align: center !important;
     letter-spacing: -0.025em !important;
+    margin-bottom: 0.25rem !important;
+}
+
+html:not(.dark) .fi-simple-header-heading {
+    color: #0f172a !important;
+}
+
+html.dark .fi-simple-header-heading {
     color: #ffffff !important;
-    margin-bottom: 0.5rem !important;
 }
 
-:root:not(.dark) .fi-simple-header-heading {
-    color: #13385E !important;
+.fi-simple-header-subheading {
+    text-align: center !important;
+    font-size: 0.85rem !important;
 }
 
-/* ── Panel Identifier Badges ── */
-.fi-simple-header:after {
-    display: table;
-    margin: 0.35rem auto 1.25rem auto;
-    padding: 0.3rem 0.85rem;
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border-radius: 9999px;
+html:not(.dark) .fi-simple-header-subheading {
+    color: #475569 !important;
 }
 
-.fi-panel-admin .fi-simple-header:after {
-    content: "🛡️ ADMIN EXECUTIVE GATEWAY";
-    background: rgba(19, 56, 94, 0.4);
-    color: #93c5fd;
-    border: 1px solid rgba(147, 197, 253, 0.3);
+html.dark .fi-simple-header-subheading {
+    color: #94a3b8 !important;
 }
 
-.fi-panel-staff .fi-simple-header:after {
-    content: "📋 STAFF OPERATIONS GATEWAY";
-    background: rgba(46, 125, 50, 0.3);
-    color: #86efac;
-    border: 1px solid rgba(134, 239, 172, 0.3);
-}
-
-.fi-panel-teacher .fi-simple-header:after {
-    content: "🏫 SCHOOL TEACHER GATEWAY";
-    background: rgba(30, 80, 128, 0.4);
-    color: #67e8f9;
-    border: 1px solid rgba(103, 232, 249, 0.3);
-}
-
-.fi-panel-donor .fi-simple-header:after {
-    content: "💛 DONOR IMPACT GATEWAY";
-    background: rgba(246, 178, 25, 0.25);
-    color: #fde047;
-    border: 1px solid rgba(253, 224, 71, 0.35);
-}
-
-.fi-panel-student .fi-simple-header:after {
-    content: "🎓 STUDENT BENEFICIARY GATEWAY";
-    background: rgba(147, 51, 234, 0.3);
-    color: #d8b4fe;
-    border: 1px solid rgba(216, 180, 254, 0.3);
-}
-
-/* ── Form Inputs Polish ── */
+/* ── Modern Form Inputs Polish ── */
 .fi-simple-layout .fi-input-wrp {
     border-radius: 0.85rem !important;
-    background: rgba(255, 255, 255, 0.06) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
     transition: all 0.2s ease !important;
 }
 
-:root:not(.dark) .fi-simple-layout .fi-input-wrp {
+html:not(.dark) .fi-simple-layout .fi-input-wrp {
     background: #ffffff !important;
-    border: 1.5px solid rgba(19, 56, 94, 0.15) !important;
+    border: 1.5px solid rgba(19, 56, 94, 0.2) !important;
 }
 
-.fi-simple-layout .fi-input-wrp:focus-within {
+html:not(.dark) .fi-simple-layout .fi-input-wrp:focus-within {
+    border-color: #13385E !important;
+    box-shadow: 0 0 0 3px rgba(19, 56, 94, 0.18) !important;
+}
+
+html.dark .fi-simple-layout .fi-input-wrp {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark .fi-simple-layout .fi-input-wrp:focus-within {
     border-color: #F6B219 !important;
-    box-shadow: 0 0 0 3px rgba(246, 178, 25, 0.22) !important;
+    box-shadow: 0 0 0 3px rgba(246, 178, 25, 0.25) !important;
     background: rgba(255, 255, 255, 0.1) !important;
 }
 
 .fi-simple-layout .fi-fo-field-label {
-    font-size: 0.8rem !important;
+    font-size: 0.82rem !important;
     font-weight: 700 !important;
-    color: rgba(255, 255, 255, 0.85) !important;
 }
 
-:root:not(.dark) .fi-simple-layout .fi-fo-field-label {
+html:not(.dark) .fi-simple-layout .fi-fo-field-label {
     color: #1e293b !important;
+}
+
+html.dark .fi-simple-layout .fi-fo-field-label {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+html:not(.dark) .fi-simple-layout input {
+    color: #0f172a !important;
+}
+
+html.dark .fi-simple-layout input {
+    color: #f8fafc !important;
+}
+
+/* Checkbox & Remember Me */
+html:not(.dark) .fi-simple-layout .fi-checkbox-label {
+    color: #334155 !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+}
+
+html.dark .fi-simple-layout .fi-checkbox-label {
+    color: #cbd5e1 !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+}
+
+/* Links inside Login Form */
+html:not(.dark) .fi-simple-layout a {
+    color: #13385E !important;
+    font-weight: 600 !important;
+}
+
+html:not(.dark) .fi-simple-layout a:hover {
+    color: #F6B219 !important;
+}
+
+html.dark .fi-simple-layout a {
+    color: #93c5fd !important;
+    font-weight: 600 !important;
+}
+
+html.dark .fi-simple-layout a:hover {
+    color: #fde047 !important;
 }
 
 /* ── Primary Submit Button ── */
 .fi-simple-layout .fi-btn-color-primary {
-    background: linear-gradient(135deg, #13385E 0%, #2E7D32 55%, #246a2a 100%) !important;
-    border: 1px solid rgba(246, 178, 25, 0.45) !important;
+    background: linear-gradient(135deg, #13385E 0%, #1d6125 55%, #2E7D32 100%) !important;
+    border: 1px solid rgba(246, 178, 25, 0.55) !important;
     border-radius: 0.85rem !important;
     padding: 0.75rem 1.5rem !important;
     font-weight: 800 !important;
@@ -405,4 +882,154 @@
 
 .fi-simple-layout .fi-btn-color-primary:active {
     transform: translateY(0) !important;
+}
+
+/* ── Modern Login Footer ── */
+.hfst-login-footer {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(120, 120, 120, 0.15);
+    text-align: center;
+}
+
+html:not(.dark) .hfst-login-footer {
+    border-top-color: rgba(19, 56, 94, 0.12);
+}
+
+html.dark .hfst-login-footer {
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.hfst-login-footer-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.hfst-login-footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+html:not(.dark) .hfst-login-footer-link {
+    color: #475569 !important;
+}
+
+html:not(.dark) .hfst-login-footer-link:hover {
+    color: #13385E !important;
+}
+
+html.dark .hfst-login-footer-link {
+    color: #94a3b8 !important;
+}
+
+html.dark .hfst-login-footer-link:hover {
+    color: #F6B219 !important;
+}
+
+.hfst-footer-bullet {
+    color: #94a3b8;
+}
+
+.hfst-login-footer-meta {
+    font-size: 0.7rem;
+    line-height: 1.4;
+}
+
+html:not(.dark) .hfst-login-footer-meta {
+    color: #64748b;
+}
+
+html.dark .hfst-login-footer-meta {
+    color: #94a3b8;
+}
+
+.hfst-security-badge {
+    margin-top: 0.35rem;
+    font-size: 0.68rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+html:not(.dark) .hfst-security-badge {
+    color: #196c34;
+}
+
+html.dark .hfst-security-badge {
+    color: #86efac;
+}
+
+/* =====================================================
+   5. RESPONSIVENESS (Mobile & Tablet Perfection)
+   ===================================================== */
+
+@media (max-width: 640px) {
+    .fi-simple-layout {
+        padding: 1rem 0.75rem 2rem 0.75rem !important;
+    }
+
+    .fi-simple-main {
+        padding: 1.75rem 1.25rem !important;
+        border-radius: 1.35rem !important;
+    }
+
+    .hfst-login-topbar {
+        padding: 0.25rem 0.25rem;
+        gap: 0.4rem;
+    }
+
+    .hfst-login-nav-link {
+        padding: 0.35rem 0.55rem;
+        font-size: 0.72rem;
+    }
+
+    .hfst-lang-btn {
+        padding: 2px 5px;
+        font-size: 0.68rem;
+    }
+
+    .hfst-theme-btn {
+        width: 24px;
+        height: 24px;
+    }
+
+    .fi-simple-header .hfst-emblem-box {
+        width: 4rem !important;
+        height: 4rem !important;
+    }
+
+    .hfst-auth-org-title {
+        font-size: 1.15rem !important;
+    }
+
+    .fi-simple-header-heading {
+        font-size: 1.25rem !important;
+    }
+
+    /* On mobile topbar, show compact emblem to prevent header overflow */
+    .fi-topbar .hfst-brand-info {
+        display: none !important;
+    }
+
+    .hfst-topbar-lang-pill {
+        padding: 1px 3px;
+        margin-right: 0.25rem;
+    }
+
+    .hfst-topbar-lang-btn {
+        padding: 2px 5px;
+        font-size: 0.65rem;
+    }
+
+    .hfst-topbar-lang-btn .hfst-code {
+        display: none;
+    }
 }

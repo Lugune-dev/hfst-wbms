@@ -15,7 +15,7 @@
     <script>
         (function(){
             try{
-                var stored = localStorage.getItem('hfst_theme');
+                var stored = localStorage.getItem('theme') || localStorage.getItem('hfst_theme');
                 var applyTheme = function(theme){
                     if(theme === 'system' || !theme){
                         document.documentElement.removeAttribute('data-theme');
@@ -29,7 +29,7 @@
                 applyTheme(stored || 'system');
                 if(window.matchMedia){
                     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e){
-                        var t = localStorage.getItem('hfst_theme') || 'system';
+                        var t = localStorage.getItem('theme') || localStorage.getItem('hfst_theme') || 'system';
                         if(t === 'system') applyTheme('system');
                     });
                 }
@@ -290,7 +290,7 @@
     (function(){
         /* ---- Theme ---- */
         var icons = { light: '☀️', dark: '🌙', system: '🖥️' };
-        function getStored(){ try{ return localStorage.getItem('hfst_theme') || 'system'; }catch(e){ return 'system'; } }
+        function getStored(){ try{ return localStorage.getItem('theme') || localStorage.getItem('hfst_theme') || 'system'; }catch(e){ return 'system'; } }
         function applyTheme(theme){
             if(theme === 'system' || !theme){
                 document.documentElement.removeAttribute('data-theme');
@@ -356,7 +356,10 @@
             if(themeBtn){
                 themeBtn.addEventListener('click', function(){
                     var next = nextTheme(getStored());
-                    try{ localStorage.setItem('hfst_theme', next); }catch(e){}
+                    try{ 
+                        localStorage.setItem('theme', next); 
+                        localStorage.setItem('hfst_theme', next); 
+                    }catch(e){}
                     applyTheme(next);
                     updateThemeIcon();
                 });

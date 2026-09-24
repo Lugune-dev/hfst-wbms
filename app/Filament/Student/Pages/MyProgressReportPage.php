@@ -18,9 +18,21 @@ class MyProgressReportPage extends Page
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-chart-bar';
     protected string $view = 'filament.student.pages.my-progress-report-page';
-    protected static ?string $navigationLabel = 'Progress Reports';
-    protected static ?string $title = 'My Progress Reports (Ripoti za Maendeleo)';
-    protected static string|\UnitEnum|null $navigationGroup = 'Education';
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Ripoti za Maendeleo' : 'Progress Reports';
+    }
+
+    public function getTitle(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Ripoti Zangu za Maendeleo' : 'My Progress Reports';
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? 'Elimu na Masomo' : 'Education';
+    }
+
     protected static ?int $navigationSort = 2;
 
     public ?array $data = [];

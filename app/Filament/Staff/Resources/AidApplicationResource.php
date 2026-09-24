@@ -13,9 +13,27 @@ use Filament\Tables\Table;
 class AidApplicationResource extends Resource
 {
     protected static ?string $model = AidApplication::class;
-    protected static string|\UnitEnum|null $navigationGroup = 'People';
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Maombi ya Ufadhili' : 'Aid Applications';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Maombi ya Ufadhili' : 'Aid Applications';
+    }
+
+    public static function getModelLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Ombi la Ufadhili' : 'Aid Application';
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? '1. Usimamizi wa Wanafunzi' : '1. Student Management';
+    }
+
     protected static ?int $navigationSort = 3;
-    protected static ?string $navigationLabel = 'Aid Applications';
 
     public static function form(Schema $schema): Schema
     {

@@ -31,9 +31,9 @@ class TeacherPanelProvider extends PanelProvider
             ->login()
             ->passwordReset()
             ->tenant(School::class, ownershipRelationship: 'schoolRelation')
-            ->brandName('Hope for Students - Teacher Portal')
-            ->brandLogo(asset('images/logo.png'))
-            ->brandLogoHeight('3rem')
+            ->brandName(fn () => app()->getLocale() === 'sw' ? 'Hope for Students – Mlango wa Walimu' : 'Hope for Students – Teacher Portal')
+            ->brandLogo(fn () => view('filament.components.brand-logo'))
+            ->brandLogoHeight('auto')
             ->favicon(asset('favicon.ico'))
             ->darkMode(true)
             ->viteTheme('resources/css/filament/theme.css')
@@ -42,6 +42,7 @@ class TeacherPanelProvider extends PanelProvider
             ->databaseNotificationsPolling('30s')
             ->renderHook('panels::user-menu.before', fn () => view('filament.widgets.language-switcher'))
             ->renderHook('panels::head.end', fn () => '<link rel="stylesheet" href="' . asset('css/filament/hfst-panel.css') . '">')
+            ->renderHook('panels::simple-layout.start', fn () => view('filament.auth.login-header'))
             ->renderHook('panels::auth.login.form.after', fn () => view('filament.auth.login-footer'))
             ->colors([
                 'primary' => Color::hex('#13385E'),
@@ -50,6 +51,10 @@ class TeacherPanelProvider extends PanelProvider
                 'danger'  => Color::hex('#DC2626'),
                 'info'    => Color::hex('#1e5080'),
                 'gray'    => Color::Slate,
+            ])
+            ->navigationGroups([
+                \Filament\Navigation\NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Wanafunzi & Mahudhurio' : 'Students & Attendance'),
+                \Filament\Navigation\NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Taarifa za Shule' : 'School Records'),
             ])
             ->discoverResources(in: app_path('Filament/Teacher/Resources'), for: 'App\Filament\Teacher\Resources')
             ->discoverPages(in: app_path('Filament/Teacher/Pages'), for: 'App\Filament\Teacher\Pages')

@@ -14,9 +14,26 @@ class DonationHistoryResource extends Resource
 {
     protected static ?string $model = Donation::class;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-currency-dollar';
-    protected static ?string $navigationLabel = 'My Donations';
-    protected static ?string $pluralModelLabel = 'My Donations';
-    protected static string|\UnitEnum|null $navigationGroup = 'My Donations';
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Historia ya Michango' : 'Donation History';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Michango Yangu' : 'My Donations';
+    }
+
+    public static function getModelLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Mchango' : 'Donation';
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? 'Michango Yangu' : 'My Donations';
+    }
+
     protected static ?int $navigationSort = 2;
 
     public static function getEloquentQuery(): Builder

@@ -27,9 +27,9 @@ class DonorPanelProvider extends PanelProvider
             ->path('donor')
             ->login()
             ->passwordReset()
-            ->brandName('HFST – Donor Portal')
-            ->brandLogo(asset('images/logo.png'))
-            ->brandLogoHeight('3rem')
+            ->brandName(fn () => app()->getLocale() === 'sw' ? 'HFST – Mlango wa Mfadhili' : 'HFST – Donor Portal')
+            ->brandLogo(fn () => view('filament.components.brand-logo'))
+            ->brandLogoHeight('auto')
             ->favicon(asset('favicon.ico'))
             ->darkMode(true)
             ->viteTheme('resources/css/filament/theme.css')
@@ -38,6 +38,7 @@ class DonorPanelProvider extends PanelProvider
             ->databaseNotificationsPolling('30s')
             ->renderHook('panels::user-menu.before', fn () => view('filament.widgets.language-switcher'))
             ->renderHook('panels::head.end', fn () => '<link rel="stylesheet" href="' . asset('css/filament/hfst-panel.css') . '">')
+            ->renderHook('panels::simple-layout.start', fn () => view('filament.auth.login-header'))
             ->renderHook('panels::auth.login.form.after', fn () => view('filament.auth.login-footer'))
             ->colors([
                 'primary' => Color::hex('#13385E'),
@@ -49,9 +50,9 @@ class DonorPanelProvider extends PanelProvider
             ])
 
             ->navigationGroups([
-                NavigationGroup::make('My Donations'),
-                NavigationGroup::make('Projects'),
-                NavigationGroup::make('Account'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Michango Yangu' : 'My Donations'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Miradi' : 'Projects'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Akaunti Yangu' : 'Account'),
             ])
             ->discoverResources(
                 in: app_path('Filament/Donor/Resources'),

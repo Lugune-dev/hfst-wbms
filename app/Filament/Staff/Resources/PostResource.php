@@ -15,7 +15,26 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
     // protected static string | \BackedEnum | null $navigationIcon = null;
-    protected static string | \UnitEnum | null $navigationGroup = 'Content';
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Habari & Machapisho' : 'News & Posts';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Habari & Machapisho' : 'News & Posts';
+    }
+
+    public static function getModelLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Chapisho' : 'Post';
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? 'Maudhui & Mawasiliano' : 'Content & Media';
+    }
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema

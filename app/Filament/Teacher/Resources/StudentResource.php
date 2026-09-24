@@ -16,7 +16,26 @@ class StudentResource extends Resource
     protected static ?string $model = Student::class;
     protected static ?string $tenantOwnershipRelationshipName = 'schoolRelation';
     // protected static string | \BackedEnum | null $navigationIcon = null;
-    protected static string | \UnitEnum | null $navigationGroup = 'People';
+    public static function getNavigationLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Wanafunzi' : 'Students';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Wanafunzi' : 'Students';
+    }
+
+    public static function getModelLabel(): string
+    {
+        return app()->getLocale() === 'sw' ? 'Mwanafunzi' : 'Student';
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return app()->getLocale() === 'sw' ? 'Wanafunzi & Mahudhurio' : 'Students & Attendance';
+    }
+
     protected static ?int $navigationSort = 1;
     protected static ?string $recordTitleAttribute = 'first_name';
 

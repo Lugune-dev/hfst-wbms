@@ -32,9 +32,9 @@ class StaffPanelProvider extends PanelProvider
             ->path('staff')
             ->login()
             ->passwordReset()
-            ->brandName('Hope for Students – Staff Portal')
-            ->brandLogo(asset('images/logo.png'))
-            ->brandLogoHeight('3rem')
+            ->brandName(fn () => app()->getLocale() === 'sw' ? 'Hope for Students – Mlango wa Watumishi' : 'Hope for Students – Staff Portal')
+            ->brandLogo(fn () => view('filament.components.brand-logo'))
+            ->brandLogoHeight('auto')
             ->favicon(asset('favicon.ico'))
             ->darkMode(true)
             ->viteTheme('resources/css/filament/theme.css')
@@ -43,6 +43,7 @@ class StaffPanelProvider extends PanelProvider
             ->databaseNotificationsPolling('30s')
             ->renderHook('panels::user-menu.before', fn () => view('filament.widgets.language-switcher'))
             ->renderHook('panels::head.end', fn () => '<link rel="stylesheet" href="' . asset('css/filament/hfst-panel.css') . '">')
+            ->renderHook('panels::simple-layout.start', fn () => view('filament.auth.login-header'))
             ->renderHook('panels::auth.login.form.after', fn () => view('filament.auth.login-footer'))
             ->colors([
                 'primary' => Color::hex('#2E7D32'),
@@ -53,9 +54,10 @@ class StaffPanelProvider extends PanelProvider
                 'gray'    => Color::Slate,
             ])
             ->navigationGroups([
-                NavigationGroup::make('1. Usimamizi wa Wanafunzi'),
-                NavigationGroup::make('2. Usimamizi wa Miradi'),
-                NavigationGroup::make('Finance'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? '1. Usimamizi wa Wanafunzi' : '1. Student Management'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? '2. Usimamizi wa Miradi' : '2. Project Management'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? '3. Fedha & Michango' : '3. Finance & Donations'),
+                NavigationGroup::make(fn () => app()->getLocale() === 'sw' ? 'Maudhui & Mawasiliano' : 'Content & Media'),
             ])
             ->discoverResources(in: app_path('Filament/Staff/Resources'), for: 'App\Filament\Staff\Resources')
             ->discoverPages(in: app_path('Filament/Staff/Pages'), for: 'App\Filament\Staff\Pages')

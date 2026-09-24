@@ -16,19 +16,19 @@ class ProjectResource extends Resource
     public static function getNavigationItems(): array
     {
         return [
-            \Filament\Navigation\NavigationItem::make('Kusimamia Miradi')
+            \Filament\Navigation\NavigationItem::make(fn () => app()->getLocale() === 'sw' ? 'Kusimamia Miradi' : 'Manage Projects')
                 ->url(fn (): string => static::getUrl('index'))
                 ->icon('heroicon-o-folder-open')
-                ->group('2. Usimamizi wa Miradi')
+                ->group(fn () => app()->getLocale() === 'sw' ? '2. Usimamizi wa Miradi' : '2. Project Management')
                 ->isActiveWhen(fn () => request()->routeIs(static::getRouteBaseName() . '.*')),
-            \Filament\Navigation\NavigationItem::make('Kupanga Wanafunzi')
+            \Filament\Navigation\NavigationItem::make(fn () => app()->getLocale() === 'sw' ? 'Kupanga Wanafunzi' : 'Allocate Students')
                 ->url(fn (): string => static::getUrl('index'))
                 ->icon('heroicon-o-user-group')
-                ->group('2. Usimamizi wa Miradi'),
-            \Filament\Navigation\NavigationItem::make('Kufuatilia Miradi')
+                ->group(fn () => app()->getLocale() === 'sw' ? '2. Usimamizi wa Miradi' : '2. Project Management'),
+            \Filament\Navigation\NavigationItem::make(fn () => app()->getLocale() === 'sw' ? 'Kufuatilia Miradi' : 'Track Projects')
                 ->url(fn (): string => static::getUrl('index'))
                 ->icon('heroicon-o-presentation-chart-line')
-                ->group('2. Usimamizi wa Miradi'),
+                ->group(fn () => app()->getLocale() === 'sw' ? '2. Usimamizi wa Miradi' : '2. Project Management'),
         ];
     }
 
