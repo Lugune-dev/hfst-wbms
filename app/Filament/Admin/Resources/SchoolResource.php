@@ -63,6 +63,12 @@ class SchoolResource extends Resource
                 Forms\Components\TextInput::make('address')
                     ->label('Postal / Physical Address (Anwani)')
                     ->placeholder('P.O. Box 2798, Arusha'),
+                Forms\Components\FileUpload::make('image')
+                    ->label('School Photo / Banner (Picha ya Shule)')
+                    ->image()
+                    ->directory('schools')
+                    ->disk('public')
+                    ->columnSpanFull(),
             ])->columns(2),
 
             \Filament\Schemas\Components\Section::make('Administration & Contacts')->components([
@@ -95,6 +101,10 @@ class SchoolResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Photo')
+                    ->circular()
+                    ->state(fn ($record) => $record->image_url),
                 Tables\Columns\TextColumn::make('code')
                     ->label('Code')
                     ->searchable()

@@ -39,6 +39,11 @@ class Student extends Model
         return $this->belongsTo(School::class, 'school_id');
     }
 
+    public function schoolRelation(): BelongsTo
+    {
+        return $this->belongsTo(School::class, 'school_id');
+    }
+
     public function getSchoolAttribute($value)
     {
         if ($this->school_id) {

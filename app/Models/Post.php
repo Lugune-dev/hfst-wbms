@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Post extends Model
@@ -42,5 +43,18 @@ class Post extends Model
     public function getExcerptAttribute(): string
     {
         return Str::limit(strip_tags($this->content), 150);
+    }
+
+    public function getImageUrlAttribute(): ?string
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        if (Str::startsWith($this->image, ['http://', 'https://', 'images/'])) {
+            return asset($this->image);
+        }
+
+        return Storage::url($this->image);
     }
 }

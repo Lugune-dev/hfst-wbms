@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+@source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
@@ -737,3 +740,77 @@
    DIVIDER WAVE
    ============================================================ */
 .wave-divider svg { display: block; }
+
+/* ============================================================
+   MODERN HOMEPAGE SECTION UTILITIES
+   ============================================================ */
+.pillar-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    padding: 1.85rem;
+    background: var(--surface-card);
+    border: 1px solid var(--border-light);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.pillar-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(19, 56, 94, 0.22);
+}
+[data-theme="dark"] .pillar-card:hover,
+.dark .pillar-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+.pillar-watermark {
+    position: absolute;
+    top: -0.5rem;
+    right: 0.75rem;
+    font-size: 5.5rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: var(--text-primary);
+    opacity: 0.04;
+    user-select: none;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.pillar-card:hover .pillar-watermark {
+    opacity: 0.09;
+    transform: translateY(-4px) scale(1.04);
+}
+.quote-watermark {
+    position: absolute;
+    top: 0.5rem;
+    right: 1.25rem;
+    font-size: 5rem;
+    line-height: 1;
+    font-family: Georgia, Cambria, serif;
+    opacity: 0.08;
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 0.3s, transform 0.3s;
+}
+.group:hover .quote-watermark {
+    opacity: 0.18;
+    transform: translateY(-2px);
+}
+.progress-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+.progress-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+    animation: progress-shimmer-anim 2.4s infinite;
+}
+@keyframes progress-shimmer-anim {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+

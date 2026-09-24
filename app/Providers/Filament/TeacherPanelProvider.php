@@ -30,7 +30,7 @@ class TeacherPanelProvider extends PanelProvider
             ->path('teacher')
             ->login()
             ->passwordReset()
-            ->tenant(School::class)
+            ->tenant(School::class, ownershipRelationship: 'schoolRelation')
             ->brandName('Hope for Students - Teacher Portal')
             ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('3rem')

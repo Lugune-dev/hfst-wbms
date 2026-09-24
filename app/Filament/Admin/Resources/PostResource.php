@@ -40,33 +40,42 @@ class PostResource extends Resource
                     ->maxLength(255)
                     ->unique(Post::class, 'slug', ignoreRecord: true),
                 Forms\Components\Select::make('type')
+                    ->label('Category / Type (Aina ya Maudhui)')
                     ->options([
-                        'news' => 'News',
-                        'event' => 'Event',
-                        'blog' => 'Blog',
+                        'news'   => 'News (Habari)',
+                        'report' => 'Report (Ripoti ya Uwazi)',
+                        'event'  => 'Event (Tukio la Kijamii)',
+                        'blog'   => 'Blog (Makala ya Elimu)',
                     ])
                     ->default('news')
                     ->required(),
                 Forms\Components\Select::make('status')
+                    ->label('Status (Hali ya Chapisho)')
                     ->options([
-                        'draft' => 'Draft',
-                        'published' => 'Published',
+                        'published' => 'Published (Imechapishwa Mtandaoni)',
+                        'draft'     => 'Draft (Rasimu)',
                     ])
-                    ->default('draft')
+                    ->default('published')
                     ->required(),
                 Forms\Components\Select::make('author_id')
+                    ->label('Author (Mwandishi)')
                     ->relationship('author', 'name')
                     ->default(auth()->id())
                     ->required(),
-                Forms\Components\DateTimePicker::make('published_at'),
+                Forms\Components\DateTimePicker::make('published_at')
+                    ->label('Published At (Tarehe ya Kuchapishwa)')
+                    ->default(now()),
             ])->columns(2),
 
             \Filament\Schemas\Components\Section::make('Content & Media')->components([
                 Forms\Components\FileUpload::make('image')
+                    ->label('Cover Photo (Picha ya Jalada)')
                     ->image()
                     ->directory('posts')
+                    ->disk('public')
                     ->columnSpanFull(),
                 Forms\Components\RichEditor::make('content')
+                    ->label('Full Story / Article Content (Maudhui Kamili ya Habari/Ripoti)')
                     ->required()
                     ->columnSpanFull(),
             ]),
@@ -77,7 +86,10 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Photo')
+                    ->circular()
+                    ->state(fn ($record) => $record->image_url),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
                     ->sortable()

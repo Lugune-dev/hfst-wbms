@@ -39,7 +39,7 @@ class PublicController extends Controller
         });
 
         $featuredProjects = Project::where('status', 'Active')->latest()->take(3)->get();
-        $latestNews       = Post::where('status', 'published')->latest('published_at')->take(3)->get();
+        $latestNews       = Post::where('status', 'published')->latest('published_at')->take(10)->get();
         $testimonials     = Testimonial::where('is_featured', true)->latest()->take(3)->get();
         $highlights       = Highlight::where('is_active', true)->orderBy('sort_order')->get();
         $partnerSchools   = School::where('is_active', true)->take(4)->get();

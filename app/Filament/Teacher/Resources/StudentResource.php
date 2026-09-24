@@ -14,6 +14,7 @@ use Filament\Tables\Table;
 class StudentResource extends Resource
 {
     protected static ?string $model = Student::class;
+    protected static ?string $tenantOwnershipRelationshipName = 'schoolRelation';
     // protected static string | \BackedEnum | null $navigationIcon = null;
     protected static string | \UnitEnum | null $navigationGroup = 'People';
     protected static ?int $navigationSort = 1;
@@ -47,6 +48,10 @@ class StudentResource extends Resource
 
             \Filament\Schemas\Components\Section::make('Education Details')->components([
                 Forms\Components\TextInput::make('school')
+                    ->label('School (Shule)')
+                    ->default(fn () => \Filament\Facades\Filament::getTenant()?->name ?? 'Arusha Secondary School')
+                    ->disabled()
+                    ->dehydrated()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('education_level')
@@ -102,7 +107,11 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('last_name')
                     ->label('Last Name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('school')->searchable()->limit(30),
+                Tables\Columns\TextColumn::make('schoolRelation.name')
+                    ->label('School')
+                    ->default(fn ($record) => $record->school)
+                    ->searchable()
+                    ->limit(30),
                 Tables\Columns\TextColumn::make('education_level')
                     ->badge()
                     ->color(fn (string $state) => match ($state) {

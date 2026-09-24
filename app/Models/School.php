@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class School extends Model
 {
@@ -25,6 +27,7 @@ class School extends Model
         'student_capacity',
         'is_active',
         'notes',
+        'image',
     ];
 
     protected $casts = [
@@ -57,5 +60,18 @@ class School extends Model
     public function getActiveStudentsCountAttribute(): int
     {
         return $this->students()->where('status', 'Active')->count();
+    }
+
+    public function getImageUrlAttribute(): ?string
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        if (Str::startsWith($this->image, ['http://', 'https://', 'images/'])) {
+            return asset($this->image);
+        }
+
+        return Storage::url($this->image);
     }
 }
