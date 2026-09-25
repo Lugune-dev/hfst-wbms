@@ -143,6 +143,11 @@ if [ "$APP_ENV" = "production" ]; then
     echo "==> [HFST-WBMS] Ensuring Livewire & Filament assets are published..."
     php artisan livewire:publish --assets --quiet || true
     php artisan filament:assets --quiet || true
+    if [ -d /var/www/html/public/vendor/livewire ]; then
+        mkdir -p /var/www/html/public/livewire /var/www/html/public/livewire-81fc73a5
+        cp -rn /var/www/html/public/vendor/livewire/* /var/www/html/public/livewire/ 2>/dev/null || true
+        cp -rn /var/www/html/public/vendor/livewire/* /var/www/html/public/livewire-81fc73a5/ 2>/dev/null || true
+    fi
     echo "==> [HFST-WBMS] Optimizing application for production..."
     php artisan config:cache || true
     php artisan route:cache || true
