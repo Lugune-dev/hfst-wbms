@@ -63,6 +63,8 @@ RUN apk add --no-cache \
     icu-dev \
     oniguruma-dev \
     sqlite-dev \
+    postgresql-dev \
+    postgresql-client \
     fontconfig \
     ttf-dejavu
 
@@ -71,6 +73,8 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j$(nproc) \
         gd \
         pdo_mysql \
+        pdo_pgsql \
+        pgsql \
         pdo_sqlite \
         zip \
         intl \

@@ -1,6 +1,6 @@
 # Mwongozo wa Docker / Docker Deployment Guide for HFST-WBMS
 
-Mfumo wa **HFST-WBMS** (Hope for Students Tanzania — Web-Based Management System) umewekewa usanidi kamili wa Docker na Docker Compose kwa ajili ya mazingira ya uzalishaji (production) na majaribio (staging/development).
+Mfumo wa **HFST-WBMS** (Hope for Students Tanzania — Web-Based Management System) umewekewa usanidi kamili wa Docker na Docker Compose kwa ajili ya mazingira ya uzalishaji (production) na majaribio (staging/development) ukitumia **PostgreSQL** na **Redis**.
 
 ---
 
@@ -8,10 +8,10 @@ Mfumo wa **HFST-WBMS** (Hope for Students Tanzania — Web-Based Management Syst
 
 | Kontena / Huduma | Picha (Image) | Lango la Ndani | Lango la Host (Default) | Majukumu |
 | :--- | :--- | :--- | :--- | :--- |
-| **`app`** | Custom `hfst-wbms:latest` (PHP 8.3 FPM + Nginx + Supervisor) | `80` | `8000` | Tovuti ya umma na paneli zote 5 za Filament (Admin, Staff, Donor, Teacher, Student) |
-| **`mysql`** | `mysql:8.0` | `3306` | `3307` | Hifadhidata ya mfumo na data zote za wanafunzi na michango |
-| **`redis`** | `redis:alpine` | `6379` | `6380` | Cache ya mfumo na foleni za kazi |
-| **`phpmyadmin`** | `phpmyadmin/phpmyadmin` | `80` | `8081` | Kiolesura cha wavuti cha kusimamia hifadhidata ya MySQL |
+| **`app`** | Custom `hfst-wbms:latest` (PHP 8.3 FPM + Nginx + Supervisor) | `80` | `8001` | Tovuti ya umma na paneli zote 5 za Filament (Admin, Staff, Donor, Teacher, Student) |
+| **`postgres`** | `postgres:16-alpine` | `5432` | `5433` | Hifadhidata ya PostgreSQL ya mfumo na data zote za wanafunzi na michango |
+| **`redis`** | `redis:alpine` | `6379` | `6380` | Cache ya mfumo na foleni za kazi (Jobs/Queue) |
+| **`adminer`** | `adminer:latest` | `8080` | `8081` | Kiolesura cha wavuti cha kusimamia hifadhidata (GUI ya PostgreSQL) |
 
 ---
 
@@ -26,9 +26,9 @@ docker compose up -d --build
 
 Amri hii itafanya yafuatayo kiotomatiki:
 1. Kujenga frontend assets kupitia Node.js (Vite production build).
-2. Kusanikisha PHP 8.3 na viendelezi vyote (GD, MySQL, Redis, Zip, Intl, Opcache).
+2. Kusanikisha PHP 8.3 na viendelezi vyote (GD, PostgreSQL `pdo_pgsql`, Redis, Zip, Intl, Opcache).
 3. Kusakinisha vitegemezi vya Composer (`composer install --no-dev`).
-4. Kuanzisha huduma ya MySQL na kusubiri iwe tayari (healthy).
+4. Kuanzisha huduma ya PostgreSQL na kusubiri iwe tayari (healthy).
 5. Kuanzisha Redis.
 6. Kuunganisha storage symlink (`php artisan storage:link`).
 7. Kutekeleza `php artisan migrate --force` kiotomatiki.
@@ -53,13 +53,13 @@ docker compose exec app php artisan db:seed --class=SchoolSeeder
 
 ### Hatua ya 3: Fungua Kwenye Kivinjari (Browser)
 
-- **Tovuti Kuu (Public Web):** [http://localhost:8000](http://localhost:8000)
-- **Paneli ya Utawala (Admin Panel):** [http://localhost:8000/admin](http://localhost:8000/admin)
-- **Paneli ya Mfadhili (Donor Portal):** [http://localhost:8000/donor](http://localhost:8000/donor)
-- **Paneli ya Wafanyakazi (Staff):** [http://localhost:8000/staff](http://localhost:8000/staff)
-- **Paneli ya Walimu (Teacher):** [http://localhost:8000/teacher](http://localhost:8000/teacher)
-- **Paneli ya Wanafunzi (Student):** [http://localhost:8000/student](http://localhost:8000/student)
-- **phpMyAdmin (DB GUI):** [http://localhost:8081](http://localhost:8081)
+- **Tovuti Kuu (Public Web):** [http://localhost:8001](http://localhost:8001)
+- **Paneli ya Utawala (Admin Panel):** [http://localhost:8001/admin](http://localhost:8001/admin)
+- **Paneli ya Mfadhili (Donor Portal):** [http://localhost:8001/donor](http://localhost:8001/donor)
+- **Paneli ya Wafanyakazi (Staff):** [http://localhost:8001/staff](http://localhost:8001/staff)
+- **Paneli ya Walimu (Teacher):** [http://localhost:8001/teacher](http://localhost:8001/teacher)
+- **Paneli ya Wanafunzi (Student):** [http://localhost:8001/student](http://localhost:8001/student)
+- **Adminer (Database GUI):** [http://localhost:8081](http://localhost:8081) *(Chagua System: PostgreSQL, Server: postgres)*
 
 ---
 
@@ -78,8 +78,8 @@ docker compose logs -f
 # Tazama kumbukumbu za app pekee
 docker compose logs -f app
 
-# Tazama kumbukumbu za mysql pekee
-docker compose logs -f mysql
+# Tazama kumbukumbu za postgres pekee
+docker compose logs -f postgres
 ```
 
 ### 3. Kuendesha Amri za Artisan Ndani ya Kontena
@@ -118,4 +118,4 @@ docker compose down -v
 - **Opcache** na **Nginx FastCGI Caching** zimewashwa kwa utendaji wa kasi ya juu.
 - **Faili za siri (`.env`, `.git`)** zimezuiwa moja kwa moja kupitia Nginx.
 - **Upakiaji wa faili (Max Upload Size):** Umewekwa hadi `64MB` kwa ajili ya risiti za PDF na picha za wanafunzi.
-- **Hifadhi ya Data (Volumes):** Data za MySQL na faili zilizopakiwa za wanafunzi zinahifadhiwa kwenye named volumes (`mysql_data`, `app_storage`), kwa hivyo hazipotei wakati kontena linaposimamishwa au kujengwa upya.
+- **Hifadhi ya Data (Volumes):** Data za PostgreSQL na faili zilizopakiwa za wanafunzi zinahifadhiwa kwenye named volumes (`postgres_data`, `app_storage`), kwa hivyo hazipotei wakati kontena linaposimamishwa au kujengwa upya.

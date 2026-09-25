@@ -32,19 +32,32 @@ fi
 # 5. Create storage symlink
 php artisan storage:link --quiet || true
 
-# 6. Wait for MySQL Database (if DB_HOST is set)
+# 6. Wait for Database (PostgreSQL / MySQL if DB_HOST is set)
 if [ -n "$DB_HOST" ]; then
-    echo "==> [HFST-WBMS] Waiting for database at $DB_HOST:${DB_PORT:-3306}..."
+    driver="${DB_CONNECTION:-pgsql}"
+    if [ "$driver" = "pgsql" ]; then
+        default_port="5432"
+    else
+        default_port="3306"
+    fi
+    target_port="${DB_PORT:-$default_port}"
+
+    echo "==> [HFST-WBMS] Waiting for $driver database at $DB_HOST:$target_port..."
     max_tries=30
     count=0
     until php -r "
-        \$host = getenv('DB_HOST');
-        \$port = getenv('DB_PORT') ?: '3306';
-        \$db   = getenv('DB_DATABASE');
-        \$user = getenv('DB_USERNAME');
-        \$pass = getenv('DB_PASSWORD');
+        \$driver = getenv('DB_CONNECTION') ?: 'pgsql';
+        \$host   = getenv('DB_HOST');
+        \$db     = getenv('DB_DATABASE');
+        \$user   = getenv('DB_USERNAME');
+        \$pass   = getenv('DB_PASSWORD');
+        \$port   = getenv('DB_PORT') ?: (\$driver === 'pgsql' ? '5432' : '3306');
         try {
-            new PDO(\"mysql:host=\$host;port=\$port;dbname=\$db\", \$user, \$pass, [PDO::ATTR_TIMEOUT => 2]);
+            if (\$driver === 'pgsql') {
+                new PDO(\"pgsql:host=\$host;port=\$port;dbname=\$db;sslmode=prefer\", \$user, \$pass, [PDO::ATTR_TIMEOUT => 2]);
+            } else {
+                new PDO(\"mysql:host=\$host;port=\$port;dbname=\$db\", \$user, \$pass, [PDO::ATTR_TIMEOUT => 2]);
+            }
             exit(0);
         } catch (Exception \$e) {
             exit(1);
@@ -58,6 +71,20 @@ if [ -n "$DB_HOST" ]; then
         sleep 1
     done
     echo "==> [HFST-WBMS] Database reachable!"
+    if [ "$driver" = "pgsql" ] && [ -n "$DB_SCHEMA" ]; then
+        php -r "
+            \$host   = getenv('DB_HOST');
+            \$db     = getenv('DB_DATABASE');
+            \$user   = getenv('DB_USERNAME');
+            \$pass   = getenv('DB_PASSWORD');
+            \$port   = getenv('DB_PORT') ?: '5432';
+            \$schema = getenv('DB_SCHEMA');
+            try {
+                \$pdo = new PDO(\"pgsql:host=\$host;port=\$port;dbname=\$db;sslmode=prefer\", \$user, \$pass);
+                \$pdo->exec(\"CREATE SCHEMA IF NOT EXISTS \\\"\$schema\\\"\");
+            } catch (Exception \$e) {}
+        " 2>/dev/null || true
+    fi
 fi
 
 # 7. Auto-run migrations if requested or enabled
