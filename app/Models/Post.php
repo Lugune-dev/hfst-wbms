@@ -67,6 +67,10 @@ class Post extends Model
             return asset($this->image);
         }
 
-        return Storage::url($this->image);
+        if (Storage::disk('public')->exists($this->image)) {
+            return Storage::disk('public')->url($this->image);
+        }
+
+        return null;
     }
 }

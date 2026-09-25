@@ -140,6 +140,9 @@ fi
 
 # 8. Optimize caching in production
 if [ "$APP_ENV" = "production" ]; then
+    echo "==> [HFST-WBMS] Ensuring Livewire & Filament assets are published..."
+    php artisan livewire:publish --assets --quiet || true
+    php artisan filament:assets --quiet || true
     echo "==> [HFST-WBMS] Optimizing application for production..."
     php artisan config:cache || true
     php artisan route:cache || true

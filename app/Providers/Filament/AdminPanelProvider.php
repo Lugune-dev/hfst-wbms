@@ -38,7 +38,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName(fn () => app()->getLocale() === 'sw' ? 'Hope for Students Tanzania – Usimamizi' : 'Hope for Students Tanzania')
             ->brandLogo(fn () => view('filament.components.brand-logo'))
             ->brandLogoHeight('auto')
-            ->favicon(asset('favicon.ico'))
+            ->favicon('/favicon.ico')
             ->darkMode(true)
             ->viteTheme('resources/css/filament/theme.css')
             ->profile(\App\Filament\Pages\Auth\EditProfile::class, isSimple: false)

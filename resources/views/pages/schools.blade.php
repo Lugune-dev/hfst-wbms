@@ -214,6 +214,7 @@
                 <div class="h-48 w-full overflow-hidden relative">
                     <img src="{{ $school->image_url ?? asset('images/' . $schoolImg) }}" 
                          alt="{{ $school->name }}" 
+                         onerror="this.onerror=null; this.src='{{ asset('images/' . $schoolImg) }}';"
                          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
                     

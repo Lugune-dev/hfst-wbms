@@ -26,10 +26,9 @@ class Highlight extends Model
             if (file_exists(public_path('images/' . $path))) {
                 return asset('images/' . $path);
             }
-            if (file_exists(public_path($path))) {
-                return asset($path);
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
+                return \Illuminate\Support\Facades\Storage::disk('public')->url($path);
             }
-            return \Illuminate\Support\Facades\Storage::disk('public')->url($path);
         }
 
         // Fallback to external URL if provided

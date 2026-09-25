@@ -20,8 +20,10 @@
             <article class="group hfst-card overflow-hidden flex flex-col">
                 {{-- Thumbnail --}}
                 <div class="h-52 overflow-hidden relative">
-                    @if($post->image)
-                        <img src="{{ Storage::url($post->image) }}" alt="{{ $post->title }}"
+                    @if($post->image_url || $post->image)
+                        <img src="{{ $post->image_url ?? asset('images/hope1.jpeg') }}" 
+                             onerror="this.onerror=null; this.src='{{ asset('images/hope1.jpeg') }}';"
+                             alt="{{ $post->title }}"
                              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     @else
                         <div class="w-full h-full flex items-center justify-center text-5xl"

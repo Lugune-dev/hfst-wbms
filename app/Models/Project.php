@@ -44,7 +44,9 @@ class Project extends Model
                 return asset($path);
             }
 
-            return \Illuminate\Support\Facades\Storage::disk('public')->url($path);
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
+                return \Illuminate\Support\Facades\Storage::disk('public')->url($path);
+            }
         }
 
         // If an external URL was provided in thumb_url, return it

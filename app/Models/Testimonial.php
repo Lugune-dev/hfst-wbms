@@ -42,6 +42,10 @@ class Testimonial extends Model
             return asset($this->photo);
         }
 
-        return Storage::url($this->photo);
+        if (Storage::disk('public')->exists($this->photo)) {
+            return Storage::disk('public')->url($this->photo);
+        }
+
+        return null;
     }
 }
