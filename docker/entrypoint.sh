@@ -36,8 +36,17 @@ if [ -f /var/www/html/.env ] && ! grep -q "^APP_KEY=base64:" /var/www/html/.env;
     php artisan key:generate --force || true
 fi
 
-# 5. Create storage symlink
+# 5. Create storage symlink and mirror public demo images
 php artisan storage:link --quiet || true
+
+if [ -d /var/www/html/public/images ]; then
+    echo "==> [HFST-WBMS] Mirroring demo images to storage/app/public and public root..."
+    mkdir -p /var/www/html/storage/app/public/images
+    cp -rn /var/www/html/public/images/* /var/www/html/storage/app/public/ 2>/dev/null || true
+    cp -rn /var/www/html/public/images/* /var/www/html/storage/app/public/images/ 2>/dev/null || true
+    cp -rn /var/www/html/public/images/* /var/www/html/public/ 2>/dev/null || true
+    chown -R www-data:www-data /var/www/html/storage/app/public /var/www/html/public
+fi
 
 # 6. Wait for Database (PostgreSQL / MySQL if DB_HOST or DATABASE_URL is set)
 if [ -n "$DATABASE_URL" ] || [ -n "$DB_URL" ] || [ -n "$DB_HOST" ]; then
@@ -116,10 +125,17 @@ if [ -n "$DATABASE_URL" ] || [ -n "$DB_URL" ] || [ -n "$DB_HOST" ]; then
     fi
 fi
 
-# 7. Auto-run migrations if requested or enabled
+# 7. Auto-run migrations and seed initial data if empty
 if [ "${RUN_MIGRATIONS:-true}" = "true" ]; then
     echo "==> [HFST-WBMS] Running database migrations..."
     php artisan migrate --force --isolated || true
+
+    echo "==> [HFST-WBMS] Seeding essential database records..."
+    php artisan db:seed --class=RoleSeeder --force || true
+    php artisan db:seed --class=AdminSeeder --force || true
+    php artisan db:seed --class=SchoolSeeder --force || true
+    php artisan db:seed --class=PostSeeder --force || true
+    php artisan db:seed --class=TestimonialSeeder --force || true
 fi
 
 # 8. Optimize caching in production

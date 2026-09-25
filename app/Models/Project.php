@@ -32,6 +32,18 @@ class Project extends Model
                 return $path;
             }
 
+            if (str_starts_with($path, 'images/')) {
+                return asset($path);
+            }
+
+            if (file_exists(public_path('images/' . $path))) {
+                return asset('images/' . $path);
+            }
+
+            if (file_exists(public_path($path))) {
+                return asset($path);
+            }
+
             return \Illuminate\Support\Facades\Storage::disk('public')->url($path);
         }
 

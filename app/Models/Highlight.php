@@ -16,7 +16,20 @@ class Highlight extends Model
     {
         // Prefer uploaded file
         if (! empty($this->attributes['image'])) {
-            return \Illuminate\Support\Facades\Storage::disk('public')->url($this->attributes['image']);
+            $path = $this->attributes['image'];
+            if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://') || str_starts_with($path, '//')) {
+                return $path;
+            }
+            if (str_starts_with($path, 'images/')) {
+                return asset($path);
+            }
+            if (file_exists(public_path('images/' . $path))) {
+                return asset('images/' . $path);
+            }
+            if (file_exists(public_path($path))) {
+                return asset($path);
+            }
+            return \Illuminate\Support\Facades\Storage::disk('public')->url($path);
         }
 
         // Fallback to external URL if provided

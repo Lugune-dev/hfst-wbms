@@ -338,7 +338,7 @@
                      style="background: var(--surface-bg);">
                     <div class="h-48 sm:h-52 w-full overflow-hidden relative">
                         @if($h->image_url || $h->image)
-                            <img src="{{ $h->image_url ?? \Illuminate\Support\Facades\Storage::disk('public')->url($h->image) }}" 
+                            <img src="{{ $h->thumb ?? $h->image_url ?? asset('images/' . ($loop->iteration == 1 ? 'hope1.jpeg' : ($loop->iteration == 2 ? 'hope.jpeg' : ($loop->iteration == 3 ? 'meet.jpeg' : 'new.jpeg')))) }}" 
                                  alt="{{ $h->title }}" 
                                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                  onerror="this.onerror=null; this.src='{{ asset('images/' . ($loop->iteration == 1 ? 'hope1.jpeg' : ($loop->iteration == 2 ? 'hope.jpeg' : ($loop->iteration == 3 ? 'meet.jpeg' : 'new.jpeg')))) }}';">
@@ -485,10 +485,8 @@
                      this.perPage = 1;
                  } else if (window.innerWidth < 1024) {
                      this.perPage = 2;
-                 } else if (window.innerWidth < 1280) {
-                     this.perPage = 3;
                  } else {
-                     this.perPage = 4;
+                     this.perPage = 3;
                  }
                  if (this.current > this.maxIndex()) {
                      this.current = this.maxIndex();
@@ -522,7 +520,7 @@
              startAutoplay() {
                  this.stopAutoplay();
                  this.autoplayTimer = setInterval(() => {
-                     if (!this.isHovered && this.total > this.perPage) {
+                     if (!this.isHovered && this.maxIndex() > 0) {
                          this.next();
                      }
                  }, 4000);
@@ -546,9 +544,7 @@
                      this.prev();
                  }
              }
-         }"
-         @mouseenter="isHovered = true"
-         @mouseleave="isHovered = false">
+         }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {{-- Section Header & Navigation Controls --}}
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
@@ -576,7 +572,7 @@
                 </a>
 
                 {{-- Prev / Next Carousel Arrows --}}
-                <div class="flex items-center gap-2" x-show="total > 1">
+                <div class="flex items-center gap-2" x-show="maxIndex() > 0">
                     <button @click="prev()" 
                             aria-label="Previous School" 
                             class="w-11 h-11 rounded-2xl flex items-center justify-center bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-white/10 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all shadow-xs active:scale-95">
@@ -594,6 +590,8 @@
         @if($schoolsCount > 0)
             {{-- Carousel Track (Smoothly moves from right to left) --}}
             <div class="overflow-hidden py-3 -my-3 px-1 -mx-1"
+                 @mouseenter="isHovered = true"
+                 @mouseleave="isHovered = false"
                  @touchstart.passive="handleTouchStart($event)"
                  @touchend.passive="handleTouchEnd($event)">
                 <div class="flex transition-transform duration-700 ease-out"
@@ -613,6 +611,7 @@
                             <div class="h-44 w-full overflow-hidden relative">
                                 <img src="{{ $school->image_url ?? asset('images/' . $schoolImg) }}" 
                                      alt="{{ $school->name }}" 
+                                     onerror="this.onerror=null; this.src='{{ asset('images/' . $schoolImg) }}';"
                                      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>
                                 
@@ -819,7 +818,7 @@
             startAutoplay() {
                 this.stopAutoplay();
                 this.autoplayTimer = setInterval(() => {
-                    if (!this.isHovered && this.total > this.perPage) {
+                    if (!this.isHovered && this.maxIndex() > 0) {
                         this.next();
                     }
                 }, 4500);
@@ -844,8 +843,6 @@
                 }
             }
         }"
-        @mouseenter="isHovered = true"
-        @mouseleave="isHovered = false"
         class="relative">
 
             {{-- Section Header & Navigation Controls --}}
@@ -874,7 +871,7 @@
                     </a>
 
                     {{-- Prev / Next Carousel Arrows --}}
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2" x-show="maxIndex() > 0">
                         <button @click="prev()" 
                                 aria-label="Previous Slide" 
                                 class="w-11 h-11 rounded-2xl flex items-center justify-center bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-white/10 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all shadow-xs active:scale-95">
@@ -892,6 +889,8 @@
             @if($newsCount > 0)
                 {{-- Carousel Track (Smoothly moves from right to left) --}}
                 <div class="overflow-hidden py-3 -my-3 px-1 -mx-1"
+                     @mouseenter="isHovered = true"
+                     @mouseleave="isHovered = false"
                      @touchstart.passive="handleTouchStart($event)"
                      @touchend.passive="handleTouchEnd($event)">
                     <div class="flex transition-transform duration-700 ease-out"
@@ -919,6 +918,7 @@
                                 {{-- Card Media --}}
                                 <div class="h-52 overflow-hidden relative">
                                     <img src="{{ $post->image_url ?? asset('images/hope1.jpeg') }}" 
+                                         onerror="this.onerror=null; this.src='{{ asset('images/hope1.jpeg') }}';"
                                          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                                          alt="{{ $post->title }}">
                                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>

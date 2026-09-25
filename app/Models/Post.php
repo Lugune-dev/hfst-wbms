@@ -51,7 +51,19 @@ class Post extends Model
             return null;
         }
 
-        if (Str::startsWith($this->image, ['http://', 'https://', 'images/'])) {
+        if (Str::startsWith($this->image, ['http://', 'https://', '//'])) {
+            return $this->image;
+        }
+
+        if (Str::startsWith($this->image, 'images/')) {
+            return asset($this->image);
+        }
+
+        if (file_exists(public_path('images/' . $this->image))) {
+            return asset('images/' . $this->image);
+        }
+
+        if (file_exists(public_path($this->image))) {
             return asset($this->image);
         }
 

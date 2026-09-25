@@ -26,7 +26,19 @@ class Testimonial extends Model
             return null;
         }
 
-        if (Str::startsWith($this->photo, ['http://', 'https://', 'images/'])) {
+        if (Str::startsWith($this->photo, ['http://', 'https://', '//'])) {
+            return $this->photo;
+        }
+
+        if (Str::startsWith($this->photo, 'images/')) {
+            return asset($this->photo);
+        }
+
+        if (file_exists(public_path('images/' . $this->photo))) {
+            return asset('images/' . $this->photo);
+        }
+
+        if (file_exists(public_path($this->photo))) {
             return asset($this->photo);
         }
 
